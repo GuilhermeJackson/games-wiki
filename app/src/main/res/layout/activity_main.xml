@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="280dp"
+        android:background="#"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="165dp"
+            android:layout_height="133dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/avatarfundo" />
+
+        <TextView
+            android:id="@+id/nomeUser"
+            android:text="User Name"
+            android:textColor="#757575"
+            android:textSize="25dp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:layout_marginTop="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/btEdit"
+            android:gravity="left"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="60dp"
+            android:background="#"
+            android:textColor="#757575"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:text="Editar Perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btFavoritos"
+            android:gravity="left"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="5dp"
+            android:background="#"
+            android:textColor="#757575"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:text="Favoritos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btConfig"
+            android:gravity="left"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="5dp"
+            android:background="#"
+            android:textColor="#757575"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:text="Configurações"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btSobre"
+            android:gravity="left"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="5dp"
+            android:background="#"
+            android:textColor="#757575"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:text="Sobre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btSair"
+            android:gravity="left"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="60dp"
+            android:background="#00000"
+            android:textColor="#757575"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:text="Sair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
