@@ -1,4 +1,4 @@
-package br.com.hbsis.splashscreen;
+package br.com.hbsis.hbgameswiki;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.hbsis.splashscreen">
+    package="br.com.hbsis.hbgameswiki">
 
     <application
         android:allowBackup="true"
@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,4 +21,4 @@
         <activity android:name=".MainActivity"></activity>
     </application>
 
-</manifest>
+    </manifest>
