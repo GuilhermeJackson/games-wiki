@@ -17,6 +17,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
     btnLogin = findViewById(R.id.btnLogin);
     edUsuario = findViewById(R.id.edUsuario);
     edSenha = findViewById(R.id.edSenha);
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (usuario.equals("") || senha.equals("")){
             Toast.makeText(this,"O campo 'Usuário' ou 'Senha' está vazio", Toast.LENGTH_LONG).show();
-        } else if (usuario.equalsIgnoreCase("hbsis") || senha.equalsIgnoreCase("123")) {
+        } else if (usuario.equals("hbsis") & senha.equals("123")) {
             Toast.makeText(this, "Seja bem-vindo " + usuario, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
