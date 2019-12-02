@@ -78,10 +78,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
         if (preferences.contains("open")) {
-            mostrarSplash(1000);
+            mostrarSplash(750);
         } else {
             adicionarPreferenceJaAbriu(preferences);
-            mostrarSplash(3000);
+            mostrarSplash(2000);
         }
 
     }
