@@ -1,5 +1,6 @@
 package br.com.hbsis.hbgameswiki;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -37,9 +38,10 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-        instanciarViews();
-        chamarBarra();
-        swipeMenu();
+
+        //instanciarViews();
+        //chamarBarra();
+        //swipeMenu();
 
     }
 
