@@ -109,16 +109,11 @@ public class RegistroActivity extends AppCompatActivity {
      *
      * @return boolean
      */
-   public Boolean verificaCadastro(){
+   public boolean verificaCadastro(){
         EditText textNome = findViewById(R.id.textNome);
         EditText textEmail = findViewById(R.id.textEmail);
         EditText textSenha = findViewById(R.id.textSenha);
         EditText textConfirma = findViewById(R.id.textConfirma);
-
-        Boolean nomeValido = false;
-        Boolean emailValido = false;
-        Boolean senhaValido = false;
-        Boolean confirmaValido = false;
 
         String txtNome = (textNome.getText()).toString();
         String txtEmail = (textEmail.getText()).toString();
