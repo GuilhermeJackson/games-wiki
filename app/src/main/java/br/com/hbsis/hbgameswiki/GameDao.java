@@ -9,9 +9,18 @@ import java.util.List;
 
 @Dao
 public interface GameDao {
+    /**Seleciona todos os jogos guardados no banco de dados
+     *
+     * @return List<Game>
+     */
     @Query("SELECT * FROM game")
     List<Game> getAll();
 
+    /** Seleciona todos os jogos que contém id igual a algum id da lista gameIds
+     *
+     * @param gameIds
+     * @return List<Game>
+     */
     @Query("SELECT * FROM game WHERE gid IN (:gameIds)")
     List<Game> loadAllByIds(int[] gameIds);
 
