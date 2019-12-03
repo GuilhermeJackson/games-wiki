@@ -1,9 +1,8 @@
 package br.com.hbsis.hbgameswiki;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Jogo extends AppCompatActivity {
 
@@ -11,8 +10,6 @@ public class Jogo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogo);
-        //Removendo ActionBar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+
     }
 }
