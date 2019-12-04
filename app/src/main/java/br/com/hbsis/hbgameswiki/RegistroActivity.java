@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
     static final int PICK_CONTACT_REQUEST = 1;  // The request code
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,8 @@ public class RegistroActivity extends AppCompatActivity {
                     textConfirma.setText("");
                     termos();
 
+                }else{
+                    generateUser();
                 }
             }
         });
@@ -82,7 +85,9 @@ public class RegistroActivity extends AppCompatActivity {
         return email;
     }
 
-    private String saveToInternalStorage(Bitmap bitmapImage){
+
+
+    /*private String saveToInternalStorage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -104,8 +109,7 @@ public class RegistroActivity extends AppCompatActivity {
             }
         }
         return directory.getAbsolutePath();
-    }
-
+    }*/
 
     /**
      * verifica se a checkbox está cheked e deixa o botão habilitado/desabilitado
@@ -238,5 +242,9 @@ public class RegistroActivity extends AppCompatActivity {
             isConfirmaIdValid = true;
         }
         return isConfirmaIdValid;
+    }
+
+    public void generateUser(){
+        User user = new User(getNome(),getSenha(),getEmail());
     }
 }
