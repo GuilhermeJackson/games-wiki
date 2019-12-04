@@ -1,8 +1,16 @@
 package br.com.hbsis.hbgameswiki;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.graphics.Bitmap;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Entity
 public class Game {
@@ -32,6 +40,9 @@ public class Game {
 
     @ColumnInfo(name = "game_is_favorite")
     private boolean isFavorite;
+
+    @ColumnInfo(name = "game_thumbnail")
+    private String gameThumbnail;
 
     public int getGId() {
         return gId;
@@ -103,6 +114,36 @@ public class Game {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public String getGameThumbnail(){
+        return gameThumbnail;
+    }
+
+    public void setGameThumbnail(Bitmap bitmapImage, Context context){
+        ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+
+        File directory = cw.getDir("gameThumbnails", Context.MODE_PRIVATE);
+        // Create imageDir
+        String fileName = gameName.replaceAll("[^a-zA-Z0-9]", "") + "_" + getGId() + ".jpg";
+        File mypath = new File(directory,fileName);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            gameThumbnail = fileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
