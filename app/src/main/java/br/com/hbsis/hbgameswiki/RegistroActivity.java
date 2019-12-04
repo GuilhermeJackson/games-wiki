@@ -49,7 +49,7 @@ public class RegistroActivity extends AppCompatActivity {
                     termos();
 
                 }else{
-                    registerUser();
+                    registroSucesso();
                 }
             }
         });
@@ -258,10 +258,8 @@ public class RegistroActivity extends AppCompatActivity {
         myExecutor.execute(() -> {
             db.userDao().insertAll(user);
             User usuarioInserido = db.userDao().selectByName(getNome());
-            Toast.makeText(this,"Inserido usuario com id " + usuarioInserido.getUId(), Toast.LENGTH_SHORT).show();
+            System.out.println("Usuario inserido: ID = " + usuarioInserido.getUId());
         });
-
-
     }
 
     public void registroSucesso() {
