@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     EditText edUsuario, edSenha;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,17 +32,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
-        String usuario =edUsuario.getText().toString();
-        String senha = edSenha.getText().toString();
+        String usuario = edUsuario.getText().toString();
+        String senha =  edSenha.getText().toString();
 
         if (usuario.equals("") || senha.equals("")){
             Toast.makeText(this,"O campo 'Usuário' ou 'Senha' está vazio", Toast.LENGTH_LONG).show();
         } else if (usuario.equals("hbsis") & senha.equals("123")) {
             Toast.makeText(this, "Seja bem-vindo " + usuario, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            } else {
+            mostrarMain();
+        } else {
             Toast.makeText(this, "Usuário ou Senha incorreta. Tente novamente!!!", Toast.LENGTH_LONG).show();
         }
     }
-}
+
+    public void mostrarMain() {
+            Intent intent = new Intent(
+                    LoginActivity.this, MainActivity.class
+            );
+            startActivity(intent);
+            finish();
+        }
+    }
