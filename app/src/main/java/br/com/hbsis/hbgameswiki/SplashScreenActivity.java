@@ -27,7 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     //Metodo que inicia a main activity depois da splash
     private void mostrarMainActivity() {
         Intent intent = new Intent(
-                SplashScreenActivity.this, MainActivity.class
+                SplashScreenActivity.this, RegistroActivity.class
         );
         startActivity(intent);
         finish();
