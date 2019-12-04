@@ -1,6 +1,9 @@
 package br.com.hbsis.hbgameswiki;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,11 +13,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
-    //private static final int SELECT_PICTURE = 0;
+    static final int PICK_CONTACT_REQUEST = 1;  // The request code
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +82,30 @@ public class RegistroActivity extends AppCompatActivity {
         return email;
     }
 
-    public void selectImage(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 0);
+    private String saveToInternalStorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
     }
+
 
     /**
      * verifica se a checkbox está cheked e deixa o botão habilitado/desabilitado
@@ -178,9 +202,9 @@ public class RegistroActivity extends AppCompatActivity {
         // 1 expression, 1 pattern, 1 matcher para cada restrição
 
         if (senha.length() >= 5){
-            String expression1 = "^.*[0-9].*$";//0-9
-            String expression2 = "^.*[^A-Za-z0-9].*$";//tds menos caracters numericos e letras
-            String expression3 = "^.*[A-Z].*$";
+            String expression1 = "^.*[0-9].*$";//0 a 9
+            String expression2 = "^.*[^A-Za-z0-9].*$";//todos menos  os caracters numericos e letras
+            String expression3 = "^.*[A-Z].*$";//
 
             Pattern pattern1 = Pattern.compile(expression1, Pattern.CASE_INSENSITIVE);
             Pattern pattern2 = Pattern.compile(expression2, Pattern.CASE_INSENSITIVE);
