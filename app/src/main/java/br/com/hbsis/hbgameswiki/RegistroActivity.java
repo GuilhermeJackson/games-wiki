@@ -244,6 +244,14 @@ public class RegistroActivity extends AppCompatActivity {
         return isConfirmaIdValid;
     }
 
+
+    /**
+     * Cria um objeto user
+     *
+     * cria m objeto user da classe User que vai guardar as informações do
+     * usuário
+     *
+     */
     public void generateUser(){
         User user = new User(getNome(),getSenha(),getEmail());
     }
