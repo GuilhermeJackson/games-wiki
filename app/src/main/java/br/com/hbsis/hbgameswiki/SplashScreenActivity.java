@@ -6,15 +6,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    Animation fromtop, frombottom;
-    TextView textview;
-    ProgressBar progressBar;
+    Animation fromtop, frombottom,fromleft,fromright,alphanimation;
+    ImageView hbgames,wiki,logomeio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +58,21 @@ public class SplashScreenActivity extends AppCompatActivity {
     //Animação da SplashScreen
 
     private void animationSplash() {
-        textview = findViewById(R.id.textView);
-        progressBar = findViewById(R.id.progressBar);
+        logomeio = findViewById(R.id.logomeio);
+        hbgames = findViewById(R.id.hbgames);
+        wiki = findViewById(R.id.wiki);
+
 
         fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
         frombottom = AnimationUtils.loadAnimation(this, R.anim.frombottom);
+        fromleft = AnimationUtils.loadAnimation(this, R.anim.fromleft);
+        fromright = AnimationUtils.loadAnimation(this, R.anim.fromright);
+        alphanimation = AnimationUtils.loadAnimation(this, R.anim.alphanimation);
 
-        textview.startAnimation(fromtop);
-        progressBar.startAnimation(frombottom);
 
+        hbgames.startAnimation(fromright);
+        logomeio.startAnimation(alphanimation);
+        wiki.startAnimation(fromleft);
 
     }
 
@@ -78,11 +84,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
         if (preferences.contains("open")) {
-            mostrarSplash(750);
+            mostrarSplash(1500);
         } else {
             adicionarPreferenceJaAbriu(preferences);
             mostrarSplash(2000);
         }
-
     }
 }
