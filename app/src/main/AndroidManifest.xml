@@ -9,16 +9,20 @@
         android:roundIcon="@mipmap/hb_games_wiki_round"
         android:supportsRtl="true"
 
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        >
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name="br.com.hbsis.hbgameswiki.SplashScreenActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity >
+
         <activity android:name="br.com.hbsis.hbgameswiki.LoginActivity"/>
+
         <activity android:name="br.com.hbsis.hbgameswiki.MainActivity">
+        </activity >
+
+        <activity android:name="br.com.hbsis.hbgameswiki.TelaJogo">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity >
     </application>
 

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HB Games Wiki</string>
+    <string name="adicionar_este_produto">Adicionar este Produto</string>
+    <string name="fallout_standart">Fallout Standart</string>
+    <string name="avalia_es_e_an_lises">Avaliações e Análises</string>
+    <string name="todo">TODO</string>
 </resources>
