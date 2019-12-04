@@ -16,9 +16,10 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity >
+        <activity android:name="br.com.hbsis.hbgameswiki.LoginActivity"/>
         <activity android:name="br.com.hbsis.hbgameswiki.MainActivity">
-        </activity>
+        </activity >
     </application>
 
 </manifest>

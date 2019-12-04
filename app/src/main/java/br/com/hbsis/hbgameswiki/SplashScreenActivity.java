@@ -33,6 +33,15 @@ public class SplashScreenActivity extends AppCompatActivity {
         finish();
     }
 
+    //Metodo que inicia o login
+    private void mostrarLogin() {
+        Intent intent = new Intent(
+                SplashScreenActivity.this, LoginActivity.class
+        );
+        startActivity(intent);
+        finish();
+    }
+
     //Splash screen
     private void mostrarSplash(int delay) {
 
@@ -40,7 +49,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mostrarMainActivity();
+                SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+
+                if (preferences.contains("open")) {
+                    mostrarLogin();
+                } else {
+                    adicionarPreferenceJaAbriu(preferences);
+                    mostrarLogin();
+                }
             }
         }, delay);
 
