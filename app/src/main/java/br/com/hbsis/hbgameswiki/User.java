@@ -1,14 +1,35 @@
 package br.com.hbsis.hbgameswiki;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
-    String login;
-    String senha;
-    String email;
+    @PrimaryKey(autoGenerate = true)
+    private int uId;
+
+    @ColumnInfo(name = "user_login")
+    private String login;
+
+    @ColumnInfo(name = "user_password")
+    private String senha;
+
+    @ColumnInfo(name = "user_email")
+    private String email;
 
     public User(String login, String senha, String email) {
-        this.login = login;
-        this.senha = senha;
-        this.email = email;
+        setLogin(login);
+        setSenha(senha);
+        setEmail(email);
+    }
+
+    public int getUId() {
+        return uId;
+    }
+
+    public void setUId(int uId) {
+        this.uId = uId;
     }
 
     public String getLogin() {
