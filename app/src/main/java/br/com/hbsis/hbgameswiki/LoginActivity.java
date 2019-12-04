@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         String senha =  edSenha.getText().toString();
 
         if (usuario.equals("") || senha.equals("")){
-            Toast.makeText(this,"O campo 'Usuário' ou 'Senha' está vazio", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"O campo Usuário ou Senha está vazio", Toast.LENGTH_LONG).show();
         } else if (usuario.equals("hbsis") & senha.equals("123")) {
             Toast.makeText(this, "Seja bem-vindo " + usuario, Toast.LENGTH_LONG).show();
             mostrarMain();
@@ -51,5 +51,13 @@ public class LoginActivity extends AppCompatActivity {
             );
             startActivity(intent);
             finish();
+        }
+
+        public void mostrarRegistro(View view) {
+            Intent intent = new Intent(
+                    LoginActivity.this, RegistroActivity.class
+            );
+            startActivity(intent);
+
         }
     }
