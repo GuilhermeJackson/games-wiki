@@ -120,6 +120,10 @@ public class Game {
         return gameThumbnail;
     }
 
+    public void setGameThumbnail(String gameThumbnail){
+        this.gameThumbnail = gameThumbnail;
+    }
+
     public void setGameThumbnail(Bitmap bitmapImage, Context context){
         ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
@@ -134,7 +138,7 @@ public class Game {
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            gameThumbnail = fileName;
+           setGameThumbnail(fileName);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
