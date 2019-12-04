@@ -1,9 +1,5 @@
 package br.com.hbsis.hbgameswiki;
 
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,7 +49,7 @@ public class RegistroActivity extends AppCompatActivity {
                     termos();
 
                 }else{
-                    generateUser();
+                    registerUser();
                 }
             }
         });
@@ -252,7 +248,19 @@ public class RegistroActivity extends AppCompatActivity {
      * usuário
      *
      */
-    public void generateUser(){
+    public void registerUser(){
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "user").build();
+
         User user = new User(getNome(),getSenha(),getEmail());
+
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(() -> {
+            db.userDao().insertAll(user);
+            User usuarioInserido = db.userDao().selectByName(getNome());
+            Toast.makeText(this,"Inserido usuario com id " + usuarioInserido.getUId(), Toast.LENGTH_SHORT).show();
+        });
+
+
     }
 }
