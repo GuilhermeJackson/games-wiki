@@ -74,8 +74,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         logomeio.startAnimation(alphanimation);
         wiki.startAnimation(fromleft);
 
-
-
     }
 
     //Metodo que inicia a splash com o delay determinado;
@@ -86,11 +84,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
         if (preferences.contains("open")) {
-            mostrarSplash(1200);
+            mostrarSplash(1500);
         } else {
             adicionarPreferenceJaAbriu(preferences);
-            mostrarSplash(1700);
+            mostrarSplash(2000);
         }
-
     }
 }
