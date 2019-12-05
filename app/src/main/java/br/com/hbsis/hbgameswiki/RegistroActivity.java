@@ -266,6 +266,5 @@ public class RegistroActivity extends AppCompatActivity {
         registerUser();
         Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG ).show();
         finish();
-
     }
 }
