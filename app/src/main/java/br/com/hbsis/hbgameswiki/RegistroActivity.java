@@ -49,7 +49,7 @@ public class RegistroActivity extends AppCompatActivity {
                     termos();
 
                 }else{
-                    registerUser();
+                    registroSucesso();
                 }
             }
         });
