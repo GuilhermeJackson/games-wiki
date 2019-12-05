@@ -8,15 +8,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/hb_games_wiki_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".SplashScreenActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Jogo">
+        <activity android:name="br.com.hbsis.hbgameswiki.SplashScreenActivity"/>
+
+        <activity android:name="br.com.hbsis.hbgameswiki.LoginActivity"/>
+        <activity android:name="br.com.hbsis.hbgameswiki.MainActivity"/>
+        <activity android:name="br.com.hbsis.hbgameswiki.cadastroJogo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity >
     </application>
 
 </manifest>
