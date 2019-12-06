@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         swipeMenu();
     }
 
+    /**
+     * Metodo que instancia todas as views
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
     private void instanciarViews() {
         //Button
         btEdit = findViewById(R.id.btEdit);
@@ -72,9 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *Metodo que tem o evento de click para abrir a barra pelo button
+     *
+     * @Since 1.0.0
+     *
+     * @return void
+     **/
     public void chamarBarra() {
 
-        //Evento de click para abrir a barra
+
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         maincontent.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
 
             public void onSwipeTop() {
