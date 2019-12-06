@@ -15,9 +15,32 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Cria tela de registro e salva as informações sobre o usuário
+ *
+ * Esta classe é responsável por criar a tela de registro e passar informações
+ * inseridas pelo usuário para a classe User, assim criando um perfil válido
+ * para login
+ *
+ * @since 1.0.0
+ * @author João Eduardo Mendes Chaicoski <jemchaicoski@hotmail.com>
+ * @author André Guilherme Theilacker <andretheilacker@gmail.com>
+ */
 public class RegistroActivity extends AppCompatActivity {
-    static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
+    /**
+     * O método onCreate contém 2 onClick, um para o botão outro para uma checkBox
+     *
+     * O onClick do botão inicia o método verificaCadastro(), caso o método retorne
+     * "false" ele muda o estado da checkBox para não checada e troca o texto
+     * de senha e confirma para vazio
+     *
+     * O onClick da checkBox inicia o método termos()
+     *
+     * @since 1.0.0
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,33 +80,61 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *Método resulta no retorno da String que o usuário inseriu na caixa editável textNome
+     *
+     *O método pega a String inserida pelo usuário e a retorna no final do método
+     *
+     * @since 1.0.0
+     * @return String
+     */
     public String getNome(){
         EditText textNome = findViewById(R.id.textNome);
         String nome = String.valueOf(textNome.getText());
         return nome;
     }
 
+    /**
+     *Método resulta no retorno da String que o usuário inseriu na caixa editável textSenha
+     *
+     *O método pega a String inserida pelo usuário e a retorna no final do método
+     *
+     * @since 1.0.0
+     * @return String
+     */
     public String getSenha(){
         EditText textSenha = findViewById(R.id.textSenha);
         String senha = String.valueOf(textSenha.getText());
         return senha;
     }
 
+    /**
+     *Método resulta no retorno da String que o usuário inseriu na caixa editável textConfirma
+     *
+     *O método pega a String inserida pelo usuário e a retorna no final do método
+     *
+     * @since 1.0.0
+     * @return String
+     */
     public String getConfirma(){
         EditText textConfirma = findViewById(R.id.textConfirma);
         String confirma = String.valueOf(textConfirma.getText());
         return confirma;
     }
 
+    /**
+     *Método resulta no retorno da String que o usuário inseriu na caixa editável textEmail
+     *
+     *O método pega a String inserida pelo usuário e a retorna no final do método
+     *
+     * @since 1.0.0
+     * @return String
+     */
     public String getEmail(){
         EditText textEmail = findViewById(R.id.textEmail);
         String email = String.valueOf(textEmail.getText());
         return email;
     }
-
-
-
-    /*http://wintechtutorials.com/blog/android-capture-image-from-camera-and-select-image-from-gallery/*/
 
     /**
      * verifica se a checkbox está cheked e deixa o botão habilitado/desabilitado
@@ -91,6 +142,7 @@ public class RegistroActivity extends AppCompatActivity {
      * caso a checkbox esteja checada o botão fica habilitado, e caso ela esteja
      * desabilitada o botão fica desabilitado
      *
+     * @since 1.0.0
      * @return void
      */
     public void termos(){
@@ -109,6 +161,7 @@ public class RegistroActivity extends AppCompatActivity {
      * Com base nos métodos isValid ele nos retorna um boolean para verificarmos se os parâmetors estão conforme
      * as restrições
      *
+     * @since 1.0.0
      * @return boolean
      */
    public boolean verificaCadastro(){
@@ -134,7 +187,8 @@ public class RegistroActivity extends AppCompatActivity {
      *
      * Utiliza uma String de email como parâmetro e verifica se está no formato correto
      *
-     * @param email
+     * @since 1.0.0
+     * @param email String que deve ser o email inserido pelo usuário
      * @return boolean
      */
     public boolean isValidEmail(String email) {
@@ -155,8 +209,9 @@ public class RegistroActivity extends AppCompatActivity {
      *
      * Utiliza uma String de nome como parâmetro e verifica se está no formato correto
      *
-     * @param nome
-     * @return
+     * @since 1.0.0
+     * @param nome String que deve ser o nome inserido pelo usuário
+     * @return boolean
      */
     public boolean isValidNome(String nome){
         boolean isNomeIdValid = false;
@@ -171,8 +226,9 @@ public class RegistroActivity extends AppCompatActivity {
      *
      * Utiliza uma String de senha como parâmetro e verifica se está no formato correto
      *
-     * @param senha
-     * @return
+     * @since 1.0.0
+     * @param senha String que deve ser a senha inserido pelo usuário
+     * @return boolean
      */
     public boolean isValidSenha(String senha){
         boolean isSenhaIdValid = false;
@@ -206,9 +262,10 @@ public class RegistroActivity extends AppCompatActivity {
      *
      * Utiliza uma String de confirma como parâmetro e verifica se está no formato correto
      *
-     * @param confirma
-     * @param senha
-     * @return
+     * @since 1.0.0
+     * @param confirma String que deve ser a confirmação inserido pelo usuário
+     * @param senha String que deve ser a senha inserido pelo usuário
+     * @return boolean
      */
     public boolean isValidConfirma(String confirma, String senha){
         boolean isConfirmaIdValid = false;
@@ -218,13 +275,14 @@ public class RegistroActivity extends AppCompatActivity {
         return isConfirmaIdValid;
     }
 
-
     /**
      * Cria um objeto user
      *
-     * cria m objeto user da classe User que vai guardar as informações do
+     * cria um objeto user da classe User que vai guardar as informações do
      * usuário
      *
+     * @since 1.0.0
+     * @return void
      */
     public void registerUser(){
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
@@ -240,6 +298,12 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Mostra um toast na tela e finaliza ela
+     *
+     * @since 1.0.0
+     * @return void
+     */
     public void registroSucesso() {
         registerUser();
         Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG ).show();
