@@ -1,6 +1,7 @@
 package br.com.hbsis.hbgameswiki;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -220,11 +221,16 @@ public class RegistroActivity extends AppCompatActivity {
 
 
     /**
-     * Cria um objeto user
+     * Acessa o banco de dados User e cadastra um novo usuário com as informações inseridas.
      *
-     * cria m objeto user da classe User que vai guardar as informações do
-     * usuário
+     *  Após o acesso ao DB, um usuário é cadastrado usando os valores inseridos nos campos, resgatados
+     * usando os métodos getNome(), getSenha() e getEmail().
+     *  A inserção no banco de dados é feito através de um executor, usado para realizar o cadastro
+     *  em uma thread separada, para evitar que o acesso trave a thread principal.
      *
+     * @author André Guilherme Theilacker <andretheilacker@gmail.com>
+     * @return void
+     * @since 1.0.0
      */
     public void registerUser(){
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
@@ -236,10 +242,22 @@ public class RegistroActivity extends AppCompatActivity {
         myExecutor.execute(() -> {
             db.userDao().insertAll(user);
             User usuarioInserido = db.userDao().selectByName(getNome());
-            System.out.println("Usuario inserido: ID = " + usuarioInserido.getUId());
+            Log.i("RegistroActivity","Usuario inserido: ID = " + usuarioInserido.getUId());
         });
     }
 
+    /**
+     * Acessa o banco de dados User e cadastra um novo usuário com as informações inseridas.
+     *
+     *  Após o acesso ao DB, um usuário é cadastrado usando os valores inseridos nos campos, resgatados
+     * usando os métodos getNome(), getSenha() e getEmail().
+     *  A inserção no banco de dados é feito através de um executor, usado para realizar o cadastro
+     *  em uma thread separada, para evitar que o acesso trave a thread principal.
+     *
+     * @author André Guilherme Theilacker <andretheilacker@gmail.com>
+     * @return void
+     * @since 1.0.0
+     */
     public void registroSucesso() {
         registerUser();
         Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG ).show();

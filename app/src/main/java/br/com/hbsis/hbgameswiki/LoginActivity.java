@@ -1,7 +1,5 @@
 package br.com.hbsis.hbgameswiki;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -38,9 +36,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
+     * Responsável por verificar os campos de login e senha, se o usuário existe e por chamar a função validarLogin()
+     *
      * Verifica se os campos de login e senha estão preenchidos corretamente, ao verificar se estão
      * vazios e também pesquisando o login no banco de dados. Caso a busca pelo login retorne
      * um usuário, a função validarLogin() é chamada.
+     *
+     * @author André Guilherme Theilacker <andretheilacker@gmail.com>
+     * @since 1.0.0
      */
     private void login() {
         String usuarioInserido = edUsuario.getText().toString();
@@ -68,13 +71,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
+     * Verifica se o login e a senha são válidos para acessar o app.
+     *
      * Recebe o boolean isLoginValid para verificar se o usuário está cadastrado no banco de dados;
      * o usuário cadastrado é passado pelo parâmetro u; e a senha inserida no campo de texto é passada
      * pelo parâmetro senhaInserida. Caso o login e a senha estejam condizentes, o login ocorre com sucesso
      * e a MainActivity é iniciada.
-     * @param isLoginValid
-     * @param u
-     * @param senhaInserida
+     *
+     * @param isLoginValid Parâmetro que define se o login inserido está cadastrado no banco
+     * @param u Usuário recuperado do banco de dados
+     * @param senhaInserida Senha inserida no campo de senha
+     * @author André Guilherme Theilacker <andretheilacker@gmail.com>
+     * @since 1.0.0
      */
     private void validarLogin(boolean isLoginValid, User u, String senhaInserida) {
         if (isLoginValid) {

@@ -44,10 +44,25 @@ public class Game {
     @ColumnInfo(name = "game_thumbnail")
     private String gameThumbnail;
 
+    /**
+     * Retorna o Id do jogo
+     *
+     * @return int
+     * @since 1.0.0
+     */
     public int getGId() {
         return gId;
     }
 
+    /**
+     * Define o Id do jogo
+     *
+     * Este método não deve ser usado fora da classe, e é declarado aqui apenas pois o Room requer
+     * um método get e set em cada parâmetro para funcionar.
+     *
+     * @param gId Id do jogo
+     * @since 1.0.0
+     */
     public void setGId(int gId) {
         this.gId = gId;
     }
@@ -56,6 +71,12 @@ public class Game {
         return gameName;
     }
 
+    /**
+     * Define o nome do jogo
+     *
+     * @param gameName Nome do jogo
+     * @since 1.0.0
+     */
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
@@ -64,6 +85,12 @@ public class Game {
         return gameDeveloper;
     }
 
+    /**
+     * Define o nome da desenvolvedora do jogo
+     *
+     * @param gameDeveloper Nome da desenvolvedora do jogo
+     * @since 1.0.0
+     */
     public void setGameDeveloper(String gameDeveloper) {
         this.gameDeveloper = gameDeveloper;
     }
@@ -72,6 +99,12 @@ public class Game {
         return gameDescription;
     }
 
+    /**
+     * Define a descrição do jogo
+     *
+     * @param gameDescription Descrição do jogo
+     * @since 1.0.0
+     */
     public void setGameDescription(String gameDescription) {
         this.gameDescription = gameDescription;
     }
@@ -80,6 +113,12 @@ public class Game {
         return gameTags;
     }
 
+    /**
+     * Define as tags do jogo
+     *
+     * @param gameTags Tags do jogo
+     * @since 1.0.0
+     */
     public void setGameTags(String gameTags) {
         this.gameTags = gameTags;
     }
@@ -88,6 +127,12 @@ public class Game {
         return gameRequirements;
     }
 
+    /**
+     * Define os requerimentos do jogo
+     *
+     * @param gameRequirements Requerimentos do jogo
+     * @since 1.0.0
+     */
     public void setGameRequirements(String gameRequirements) {
         this.gameRequirements = gameRequirements;
     }
@@ -96,6 +141,12 @@ public class Game {
         return gamePrice;
     }
 
+    /**
+     * Define o preço do jogo
+     *
+     * @param gamePrice Preço do jogo
+     * @since 1.0.0
+     */
     public void setGamePrice(double gamePrice) {
         this.gamePrice = gamePrice;
     }
@@ -104,6 +155,12 @@ public class Game {
         return gameRating;
     }
 
+    /**
+     * Define a nota dada ao jogo
+     *
+     * @param gameRating Nota do jogo
+     * @since 1.0.0
+     */
     public void setGameRating(double gameRating) {
         this.gameRating = gameRating;
     }
@@ -112,6 +169,12 @@ public class Game {
         return isFavorite;
     }
 
+    /**
+     * Define o jogo como favorito
+     *
+     * @param favorite Indica se o jogo foi favoritado
+     * @since 1.0.0
+     */
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
@@ -120,17 +183,38 @@ public class Game {
         return gameThumbnail;
     }
 
+    /**
+     * Define o nome do arquivo da thumbnail do jogo
+     *
+     * @param gameThumbnail Nome do arquivo da thumbnail do jogo
+     * @since 1.0.0
+     */
     public void setGameThumbnail(String gameThumbnail){
         this.gameThumbnail = gameThumbnail;
     }
 
+    /**
+     * Define a thumbnail do jogo ao passar uma imagem e o contexto da aplicação
+     *
+     *  Ao passar a imagem e o contexto, a imagem é salva no armazenamento interno, na pasta 'gameThumbnails',
+     *  sendo que o nome do arquivo é definido através do nome do jogo acrescido do id, para evitar conflitos.
+     *  Após salvar a imagem, o nome do arquivo é salvo no parâmetro gameThumbnail através do método
+     *  setGameThumbnail(String gameThumbnail).
+     *
+     *
+     *
+     * @param bitmapImage Thumbnail do jogo
+     * @param context Contexto da aplicação
+     * @since 1.0.0
+     */
     public void setGameThumbnail(Bitmap bitmapImage, Context context){
         ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
+        // path to /data/data/yourapp/app_data/gameThumbnails
 
         File directory = cw.getDir("gameThumbnails", Context.MODE_PRIVATE);
-        // Create imageDir
+        // Create gameThumbnails
         String fileName = gameName.replaceAll("[^a-zA-Z0-9]", "") + "_" + getGId() + ".jpg";
+        // Create new file in 'gameThumbnails' with the name 'fileName'
         File mypath = new File(directory,fileName);
 
         FileOutputStream fos = null;
@@ -138,7 +222,7 @@ public class Game {
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-           setGameThumbnail(fileName);
+            setGameThumbnail(fileName);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -150,6 +234,12 @@ public class Game {
         }
     }
 
+    /**
+     * Método toString() para que o objeto possa ser escrito no formato de texto.
+     *
+     * @return String
+     * @since 1.0.0
+     */
     @Override
     public String toString() {
         return "Game" + getGId() + ": " + getGameName() +
