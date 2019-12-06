@@ -37,12 +37,9 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-
-        //instanciarViews();
-        //chamarBarra();
-        //swipeMenu();
-
+        instanciarViews();
+        chamarBarra();
+        swipeMenu();
     }
 
     private void instanciarViews() {
@@ -124,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
         //maincontent.animate().translationX(-800);
         mainmenu.animate().translationX(-800);
         embacar.setX(1600);
+    }
+
+    public void telaSobre(View view) {
+        Intent intent = new Intent(
+                MainActivity.this, SobreActivity.class
+        );
+        startActivity(intent);
+
     }
 
 

@@ -1,5 +1,7 @@
 package br.com.hbsis.hbgameswiki;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,22 +18,23 @@ import java.util.concurrent.Executors;
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     EditText edUsuario, edSenha;
+    boolean isClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnLogin = findViewById(R.id.btnLogin);
-        edUsuario = findViewById(R.id.edUsuario);
-        edSenha = findViewById(R.id.edSenha);
+    btnLogin = findViewById(R.id.btnLogin);
+    edUsuario = findViewById(R.id.edUsuario);
+    edSenha = findViewById(R.id.edSenha);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+    btnLogin.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            login();
+        }
+    });
     }
 
     /**
@@ -55,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             Executor myExecutor = Executors.newSingleThreadExecutor();
             myExecutor.execute(() -> {
                 User usuarioLogando = db.userDao().selectByName(usuarioInserido);
-               LoginActivity.this.runOnUiThread(new Runnable() {
+                LoginActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         validarLogin(usuarioLogando != null, usuarioLogando, senhaInserida);
                     }
@@ -87,18 +90,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void mostrarMain() {
-        Intent intent = new Intent(
-                LoginActivity.this, MainActivity.class
-        );
-        startActivity(intent);
-        finish();
-    }
+            Intent intent = new Intent(
+                    LoginActivity.this, MainActivity.class
+            );
+            startActivity(intent);
+            finish();
+        }
 
     public void mostrarRegistro(View view) {
-        Intent intent = new Intent(
-                LoginActivity.this, RegistroActivity.class
-        );
-        startActivity(intent);
+
+        if (!isClicked) {
+            isClicked = true;
+            Intent intent = new Intent(
+                    LoginActivity.this, RegistroActivity.class
+            );
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isClicked = false;
 
     }
+
+
 }
