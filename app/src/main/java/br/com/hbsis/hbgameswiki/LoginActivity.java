@@ -9,15 +9,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     EditText edUsuario, edSenha;
+    boolean isClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
     btnLogin = findViewById(R.id.btnLogin);
     edUsuario = findViewById(R.id.edUsuario);
@@ -31,17 +37,55 @@ public class LoginActivity extends AppCompatActivity {
     });
     }
 
-    public void login() {
-        String usuario = edUsuario.getText().toString();
-        String senha =  edSenha.getText().toString();
+    /**
+     * Verifica se os campos de login e senha estão preenchidos corretamente, ao verificar se estão
+     * vazios e também pesquisando o login no banco de dados. Caso a busca pelo login retorne
+     * um usuário, a função validarLogin() é chamada.
+     */
+    private void login() {
+        String usuarioInserido = edUsuario.getText().toString();
+        String senhaInserida = edSenha.getText().toString();
 
-        if (usuario.equals("") || senha.equals("")){
-            Toast.makeText(this,"O campo 'Usuário' ou 'Senha' está vazio", Toast.LENGTH_LONG).show();
-        } else if (usuario.equals("hbsis") & senha.equals("123")) {
-            Toast.makeText(this, "Seja bem-vindo " + usuario, Toast.LENGTH_LONG).show();
-            mostrarMain();
+        if (usuarioInserido.equals("")) {
+            Toast.makeText(this, "O campo Usuário está vazio", Toast.LENGTH_SHORT).show();
+        } else if (senhaInserida.equals("")) {
+            Toast.makeText(this, "O campo Senha está vazio", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Usuário ou Senha incorreta. Tente novamente!!!", Toast.LENGTH_LONG).show();
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "user").build();
+
+
+            Executor myExecutor = Executors.newSingleThreadExecutor();
+            myExecutor.execute(() -> {
+                User usuarioLogando = db.userDao().selectByName(usuarioInserido);
+                LoginActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        validarLogin(usuarioLogando != null, usuarioLogando, senhaInserida);
+                    }
+                });
+            });
+        }
+    }
+
+    /**
+     * Recebe o boolean isLoginValid para verificar se o usuário está cadastrado no banco de dados;
+     * o usuário cadastrado é passado pelo parâmetro u; e a senha inserida no campo de texto é passada
+     * pelo parâmetro senhaInserida. Caso o login e a senha estejam condizentes, o login ocorre com sucesso
+     * e a MainActivity é iniciada.
+     * @param isLoginValid
+     * @param u
+     * @param senhaInserida
+     */
+    private void validarLogin(boolean isLoginValid, User u, String senhaInserida) {
+        if (isLoginValid) {
+            if (senhaInserida.equals(u.getSenha())) {
+                Toast.makeText(this, "Seja bem-vindo " + u.getLogin() + "!", Toast.LENGTH_LONG).show();
+                mostrarMain();
+            } else {
+                Toast.makeText(this, "Senha incorreta!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Usuário não cadastrado!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -52,4 +96,24 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+    public void mostrarRegistro(View view) {
+
+        if (!isClicked) {
+            isClicked = true;
+            Intent intent = new Intent(
+                    LoginActivity.this, RegistroActivity.class
+            );
+            startActivity(intent);
+        }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isClicked = false;
+
+    }
+
+
+}
