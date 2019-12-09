@@ -25,22 +25,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-    btnLogin = findViewById(R.id.btnLogin);
-    edUsuario = findViewById(R.id.edUsuario);
-    edSenha = findViewById(R.id.edSenha);
+        btnLogin = findViewById(R.id.btnLogin);
+        edUsuario = findViewById(R.id.edUsuario);
+        edSenha = findViewById(R.id.edSenha);
 
-    btnLogin.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            login();
-        }
-    });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
     }
 
     /**
      * Verifica se os campos de login e senha estão preenchidos corretamente, ao verificar se estão
      * vazios e também pesquisando o login no banco de dados. Caso a busca pelo login retorne
      * um usuário, a função validarLogin() é chamada.
+     * version 1.0  |   guilherme.lamim@hbsis.com.br
      */
     private void login() {
         String usuarioInserido = edUsuario.getText().toString();
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Recebe o boolean isLoginValid para verificar se o usuário está cadastrado no banco de dados;
      * o usuário cadastrado é passado pelo parâmetro u; e a senha inserida no campo de texto é passada
@@ -90,12 +92,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void mostrarMain() {
-            Intent intent = new Intent(
-                    LoginActivity.this, MainActivity.class
-            );
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = new Intent(
+                LoginActivity.this, MainActivity.class
+        );
+        startActivity(intent);
+        finish();
+    }
 
     public void mostrarRegistro(View view) {
 
