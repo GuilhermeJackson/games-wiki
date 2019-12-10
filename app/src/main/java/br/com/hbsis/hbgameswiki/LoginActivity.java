@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void mostrarMain() {
         Intent intent = new Intent(
-                LoginActivity.this, MainActivity.class
+                this, PrincipalActivity.class
         );
         startActivity(intent);
         finish();

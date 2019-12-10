@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:background="#F7F7F7"
-    tools:context="br.com.sandro.menuprincipal.DetalhesJogosActivity">
+    tools:context=".DetalhesJogosActivity">
 
     <TextView
         android:id="@+id/tv_titulo"
