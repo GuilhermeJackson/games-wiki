@@ -26,6 +26,6 @@
 
         <activity android:name="br.com.hbsis.hbgameswiki.RegistroActivity" />
         <activity android:name="br.com.hbsis.hbgameswiki.SobreActivity" />
-
+        <activity android:name="br.com.hbsis.hbgameswiki.DetalhesJogosActivity" />
     </application>
 </manifest>
