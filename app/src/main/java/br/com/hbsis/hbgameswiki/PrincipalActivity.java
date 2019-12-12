@@ -42,8 +42,8 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        setContentView(R.layout.activity_mains);
+        //getSupportActionBar().hide();
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();

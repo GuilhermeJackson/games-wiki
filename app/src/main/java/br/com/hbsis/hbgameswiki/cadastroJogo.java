@@ -35,7 +35,7 @@ public class cadastroJogo extends AppCompatActivity {
 
     public void cadastrarJogo() {
         Jogos jogos = new Jogos();
-        jogos.getNome();
+        jogos.getTitulo();
         jogos.getDescricao();
     }
 }
