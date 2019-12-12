@@ -12,7 +12,7 @@
     tools:context=".PrincipalActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout22"
         android:layout_width="395dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -106,7 +106,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout22">
 
         <ImageView
             android:id="@+id/img_carrinho"
@@ -145,14 +145,18 @@
 
     </LinearLayout>
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
     <LinearLayout
         android:id="@+id/mainmenu"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:translationX="-280dp"
-        tools:ignore="MissingConstraints">
+        android:translationX="-280dp">
 
         <ImageView
             android:id="@+id/avatar"
@@ -284,6 +288,15 @@
 
 
     </LinearLayout>
+        <RelativeLayout
+            android:translationX="-600dp"
+            android:id="@+id/embacar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#75000000"
+            >
 
+        </RelativeLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,8 +50,8 @@ public class PrincipalActivity extends AppCompatActivity {
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ImageView imagemIcon;
 
-    RelativeLayout maincontent, embacar;
-    LinearLayout mainmenu;
+    RelativeLayout embacar;
+    LinearLayout mainmenu, maincontent;
     Button btnMenu;
     Animation fromtop, frombottom;
     ImageView avatar;
@@ -91,7 +91,7 @@ public class PrincipalActivity extends AppCompatActivity {
         //Botão menuAsset pra testes
         btnMenu = findViewById(R.id.btnmenu);
 
-        maincontent = findViewById(R.id.maincontent);
+        maincontent = findViewById(R.id.linearLayout22);
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
 
@@ -195,7 +195,6 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
         //Ao clicar fora da barra ela some
-
         maincontent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,7 +204,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
     private void abrirMenu() {
-        //maincontent.animate().translationX(0);
+        maincontent.animate().translationX(0);
         mainmenu.animate().translationX(0);
         embacar.setX(0);
         embacar.bringToFront();
@@ -234,8 +233,11 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void fecharMenu() {
-        //maincontent.animate().translationX(-800);
+        maincontent.animate().translationX(-800);
         mainmenu.animate().translationX(-800);
         embacar.setX(1600);
     }
+
+
+
 }
