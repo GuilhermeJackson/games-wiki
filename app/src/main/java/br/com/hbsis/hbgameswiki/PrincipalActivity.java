@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,11 +59,43 @@ public class PrincipalActivity extends AppCompatActivity {
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mains);
         //getSupportActionBar().hide();
+
+
+        //Button
+        btEdit = findViewById(R.id.btEdit);
+        btFavoritos = findViewById(R.id.btFavoritos);
+        btConfig = findViewById(R.id.btConfig);
+        btSobre = findViewById(R.id.btSobre);
+        btSair = findViewById(R.id.btSair);
+
+        //TextView
+        nomeUser = findViewById(R.id.nomeUser);
+        email = findViewById(R.id.email);
+        tituloSobre = findViewById(R.id.tituloSobre);
+        version = findViewById(R.id.version);
+
+        //ImageView
+        avatar = findViewById(R.id.avatar);
+
+        //Animações
+        fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
+        frombottom = AnimationUtils.loadAnimation(this, R.anim.frombottom);
+
+        //Botão menuAsset pra testes
+        btnMenu = findViewById(R.id.btnmenu);
+
+        maincontent = findViewById(R.id.maincontent);
+        mainmenu = findViewById(R.id.mainmenu);
+        embacar = findViewById(R.id.embacar);
+
+
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();
@@ -158,10 +191,17 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 abrirMenu();
-
             }
         });
 
+        //Ao clicar fora da barra ela some
+
+        maincontent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
     private void abrirMenu() {
@@ -186,5 +226,16 @@ public class PrincipalActivity extends AppCompatActivity {
         avatar.startAnimation(fromtop);
         nomeUser.startAnimation(fromtop);
         email.startAnimation(fromtop);
+    }
+
+    public void telaSobre(View view) {
+        Intent intent = new Intent(PrincipalActivity.this, SobreActivity.class);
+        startActivity(intent);
+    }
+
+    private void fecharMenu() {
+        //maincontent.animate().translationX(-800);
+        mainmenu.animate().translationX(-800);
+        embacar.setX(1600);
     }
 }
