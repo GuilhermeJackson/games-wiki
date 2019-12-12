@@ -7,10 +7,12 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -21,9 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
  *
  * Classe também responsavel  pelas animações da splashscreen
  */
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity{
     Animation fromtop, frombottom, fromleft, fromright, alphanimation;
     ImageView hbgames, wiki, logomeio;
+    User user;
+    int id = 0;
+    String email;
 
     /**
      * Chama o método que inicia a splashscreen e seu layout
@@ -108,8 +113,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
-                if (preferences.contains("open")) {
-                    mostrarLogin();
+                SharedPreferences sp = getSharedPreferences("prefLogin", MODE_PRIVATE);
+                String usuario = sp.getString("usuario","");
+                String senha = sp.getString("senha","");
+
+                if (preferences.contains("open") && !usuario.equals("")) {
+                    mostrarPrincipal(usuario,senha);
                 } else {
                     adicionarPreferenceJaAbriu(preferences);
                     mostrarLogin();
@@ -118,6 +127,45 @@ public class SplashScreenActivity extends AppCompatActivity {
         }, delay);
 
         animationSplash();
+
+    }
+
+    /**
+     *
+     *
+     *
+     *
+     */
+    private void mostrarPrincipal(String usuario, String senha){
+
+
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "user").build();
+
+
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+
+        myExecutor.execute(() -> {
+            user = db.userDao().selectByName(usuario);
+            SplashScreenActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    id = user.getUId();
+                    email = user.getEmail();
+                }
+            });
+        });
+
+        Intent intent = new Intent(SplashScreenActivity.this, PrincipalActivity.class);
+        intent.putExtra("usuario", usuario);
+        intent.putExtra("id", id);
+        intent.putExtra("email", email);
+
+
+
+        startActivity(intent);
+        finish();
 
     }
 
@@ -194,4 +242,5 @@ public class SplashScreenActivity extends AppCompatActivity {
             mostrarSplash(2000);
         }
     }
+
 }
