@@ -48,7 +48,7 @@ public class PrincipalActivity extends AppCompatActivity {
     GenerosAdapter generosAdapter;
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
-    ImageView imagemIcon;
+    ImageView imagemIcon, img_adicionar;
 
     RelativeLayout embacar;
     LinearLayout mainmenu, maincontent;
@@ -83,6 +83,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         //ImageView
         avatar = findViewById(R.id.avatar);
+        img_adicionar = findViewById(R.id.img_adicionar);
 
         //Animações
         fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
@@ -95,7 +96,14 @@ public class PrincipalActivity extends AppCompatActivity {
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
 
-
+        //Tela de cadastro de jogos
+        img_adicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cadastroJogo = new Intent(PrincipalActivity.this, cadastroJogo.class);
+                startActivity(cadastroJogo);
+            }
+        });
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();
@@ -233,11 +241,8 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void fecharMenu() {
-        maincontent.animate().translationX(-800);
+        //maincontent.animate().translationX(-800);
         mainmenu.animate().translationX(-800);
         embacar.setX(1600);
     }
-
-
-
 }
