@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void abrirMenu() {
-        //maincontent.animate().translationX(0);
+        maincontent.animate().translationX(0);
         mainmenu.animate().translationX(0);
         embacar.setX(0);
         embacar.bringToFront();

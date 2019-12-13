@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">HB Games Wiki</string>
+    <string name="app_name">Recyclerview</string>
+    <string name="todo">TODO</string>
+    <string name="desenvolvedora">Desenvolvedora</string>
+    <string name="nome_do_jogo">Nome do jogo</string>
+    <string name="pesquise_por_um_jogo">Pesquise por um jogo</string>
 </resources>
