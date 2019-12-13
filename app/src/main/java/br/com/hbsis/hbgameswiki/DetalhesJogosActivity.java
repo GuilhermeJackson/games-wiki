@@ -32,7 +32,7 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogos);
         // Deixa a Action Bar invisível
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         // Definições de variáveis
         tv_titulo = findViewById(R.id.tv_titulo);

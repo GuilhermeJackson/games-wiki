@@ -12,7 +12,7 @@
     tools:context=".PrincipalActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout22"
         android:layout_width="395dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -21,6 +21,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,7 +106,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout22">
 
         <ImageView
             android:id="@+id/img_carrinho"
@@ -143,5 +144,159 @@
             app:srcCompat="@mipmap/add_icon_foreground" />
 
     </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/mainmenu"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:translationX="-280dp">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="165dp"
+            android:layout_height="133dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/avatarfundo" />
+
+        <TextView
+            android:id="@+id/nomeUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="User Name"
+            android:textColor="#757575"
+            android:textSize="25dp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="emailteste@outlook.com"
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/btEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="60dp"
+            android:background="#00FFFFFF"
+            android:drawableLeft="@drawable/perfil"
+            android:drawablePadding="10dp"
+            android:gravity="left|center_vertical"
+            android:text="Editar Perfil"
+            android:textAllCaps="false"
+            android:textColor="#757575"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btFavoritos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:drawableLeft="@drawable/favoritos"
+            android:drawablePadding="10dp"
+            android:gravity="left|center_vertical"
+            android:text="Favoritos"
+            android:textAllCaps="false"
+            android:textColor="#757575"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btConfig"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFEFE"
+            android:drawableLeft="@drawable/config"
+            android:drawablePadding="10dp"
+            android:gravity="left|center_vertical"
+            android:text="Configurações"
+            android:textAllCaps="false"
+            android:textColor="#757575"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btSobre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:drawableLeft="@drawable/sobre"
+            android:drawablePadding="10dp"
+            android:gravity="left|center_vertical"
+            android:onClick="telaSobre"
+            android:text="Sobre"
+            android:textAllCaps="false"
+            android:textColor="#757575"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btSair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="60dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/sair"
+            android:drawablePadding="10dp"
+            android:gravity="left|center_vertical"
+            android:text="Sair"
+            android:textAllCaps="false"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tituloSobre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:gravity="center"
+            android:text="HB GAMES WIKI. 2019 ©"
+            android:textColor="#757575"
+            android:textSize="16dp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="version 0.0.1"
+            android:textColor="#757575"
+            android:textSize="14dp"
+            android:textStyle="normal" />
+
+
+    </LinearLayout>
+        <RelativeLayout
+            android:translationX="-600dp"
+            android:id="@+id/embacar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#75000000"
+            >
+
+        </RelativeLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
