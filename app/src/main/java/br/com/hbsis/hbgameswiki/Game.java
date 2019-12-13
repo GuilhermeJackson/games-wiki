@@ -44,6 +44,12 @@ public class Game {
     @ColumnInfo(name = "game_thumbnail")
     private String gameThumbnail;
 
+    public Game(String gameName, String gameDescription, String gameTags){
+        setGameName(gameName);
+        setGameDescription(gameDescription);
+        setGameTags(gameTags);
+    }
+
     public int getGId() {
         return gId;
     }

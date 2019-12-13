@@ -54,7 +54,7 @@ public class PrincipalActivity extends AppCompatActivity {
     LinearLayout mainmenu, maincontent;
     Button btnMenu;
     Animation fromtop, frombottom;
-    ImageView avatar;
+    ImageView avatar, img_adicionar;
     TextView nomeUser, email, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
@@ -83,6 +83,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         //ImageView
         avatar = findViewById(R.id.avatar);
+        img_adicionar = findViewById(R.id.img_adicionar);
 
         //Animações
         fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
@@ -95,6 +96,14 @@ public class PrincipalActivity extends AppCompatActivity {
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
 
+        //Entrando na tela de cadastro
+        img_adicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaDeCadastro = new Intent(PrincipalActivity.this, cadastroJogo.class);
+                startActivity(telaDeCadastro);
+            }
+        });
 
 
         // Cria uma ArrayList do tipo Generos
