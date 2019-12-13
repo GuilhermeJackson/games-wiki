@@ -9,6 +9,18 @@
     android:background="#F7F7F7"
     tools:context=".DetalhesJogosActivity">
 
+    <Button
+        android:id="@+id/btn_Share"
+        android:layout_width="193dp"
+        android:layout_height="170dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginRight="96dp"
+        android:layout_marginBottom="68dp"
+        android:background="@mipmap/icons8codigoqr64"
+        android:onClick="acessaQR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/tv_titulo"
         android:layout_width="match_parent"

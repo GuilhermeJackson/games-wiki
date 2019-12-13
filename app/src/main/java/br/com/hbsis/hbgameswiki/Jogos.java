@@ -1,6 +1,10 @@
 package br.com.hbsis.hbgameswiki;
-public class Jogos {
 
+import android.content.Intent;
+import android.widget.Button;
+
+public class Jogos {
+    private Button btnShare;
     private String Titulo, Categoria, Descricao, Genero, Desenvolvedora;
     private int ImagemPequenaTP, ImagemGrandeTP, JogoFavorito, Avaliacao, MinValor, MaxValor;
     private int ImagemPequena1TDJ, ImagemPequena2TDJ, ImagemPequena3TDJ, ImagemPequena4TDJ, ImagemPequena5TDJ, ImagemGrandeTDJ;
@@ -54,7 +58,9 @@ public class Jogos {
         ImagemPequena4TDJ = img_pequena_4_TDJ;
         ImagemPequena5TDJ = img_pequena_5_TDJ;
         ImagemGrandeTDJ = img_grande_TDJ;
+
     }
+
 
     public int getImagemPequena1TDJ() {
         return ImagemPequena1TDJ;
