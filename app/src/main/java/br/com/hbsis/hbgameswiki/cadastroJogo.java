@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class cadastroJogo extends AppCompatActivity {
     EditText etNomeJogo, etDescricaoJogo;
@@ -60,13 +63,15 @@ public class cadastroJogo extends AppCompatActivity {
             public void onClick(View v) {
                 if (verificarJogo()) {
                     cadastrarJogo();
+                    Intent telaPrincipal = new Intent(cadastroJogo.this, PrincipalActivity.class);
+                    startActivity(telaPrincipal);
                 }
             }
         });
     }
     public boolean verificaNome(){
         boolean verificaNome = false;
-        if (etNomeJogo.length() >= 1){
+        if (getGameName().length() >= 1){
             verificaNome = true;
         }else {
             Toast.makeText(this, "O nome do jogo está vazio!!!", Toast.LENGTH_SHORT).show();
@@ -88,7 +93,7 @@ public class cadastroJogo extends AppCompatActivity {
 
     public boolean verificarDescJogo(){
             boolean Gamedec = false;
-            if (etDescricaoJogo.length() >= 10){
+            if (getGameDesc().length() >= 10){
                 Gamedec = true;
             } else {
                 Toast.makeText(this, "Descrição deverá conter pelo menos 10 caracteres!!!", Toast.LENGTH_SHORT).show();
@@ -181,10 +186,19 @@ public class cadastroJogo extends AppCompatActivity {
 
         Game game = new Game(getGameName(), getGameDesc(), gameTag);
 
-        
+
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(() -> {
+            db.gameDao().insertAll(game);
+            //Game JogoCadastrado = db.gameDao().loadAllByIds(getGameName());
+            //System.out.println("Jogo inserido: ID = " + JogoCadastrado.getGId());
+        });
 
 
-        //String gameTags =
-        //Game game= new Game();
+
+
+        textView8.setText(checkBoxes.toString());
+
+        Toast.makeText(this, "Jogo criado com sucesso!!!", Toast.LENGTH_SHORT).show();
     }
 }
