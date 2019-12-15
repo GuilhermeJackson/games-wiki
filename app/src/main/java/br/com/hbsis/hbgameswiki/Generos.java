@@ -17,10 +17,6 @@ public class Generos {
         this.genero = genero;
     }
 
-    // Para cadastro na lista
-    public Generos() {
-    }
-
     public String getGenero() {
         return genero;
     }

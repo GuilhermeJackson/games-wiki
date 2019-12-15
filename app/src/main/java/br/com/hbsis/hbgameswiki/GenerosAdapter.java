@@ -21,13 +21,6 @@ public class GenerosAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public List<Generos> getGeneros() {
-        return generos;
-    }
-
-    public void setGeneros(List<Generos> generos) {
-        this.generos = generos;
-    }
 
     /**
      * Adaptador para os generos
