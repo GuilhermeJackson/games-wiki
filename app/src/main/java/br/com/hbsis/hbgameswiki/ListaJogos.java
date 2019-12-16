@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -67,6 +68,14 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
         holder.img_grande.setImageResource(listaJogos.get(position).getImagemGrandeTP());
         holder.rb_avaliacao.setRating(listaJogos.get(position).getAvaliacao());
         holder.img_favorito.setImageResource(listaJogos.get(position).getJogoFavorito());
+        holder.btn_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, QrCode.class);
+                intent.putExtra("", listaJogos.get(position).getQrCode());
+                context.startActivity(intent);
+            }
+        });
         holder.card_jogos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +122,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
         ImageView img_pequena, img_grande;
         CardView card_jogos;
         ImageView img_favorito;
+        Button btn_share;
 
         // Método da classe abstrata ViewHolder
         public MyViewHolder(View itemView) {
@@ -126,6 +136,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
             rb_avaliacao = itemView.findViewById(R.id.rb_avaliacao);
             img_favorito = itemView.findViewById(R.id.favorito_icon);
             card_jogos = itemView.findViewById(R.id.card_jogo);
+            btn_share = itemView.findViewById(R.id.btn_Share);
         }
     }
 }
