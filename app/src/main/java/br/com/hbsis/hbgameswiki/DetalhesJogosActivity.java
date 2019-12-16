@@ -34,7 +34,6 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogos);
         // Deixa a Action Bar invisível
-        getSupportActionBar().hide();
 
         // Definições de variáveis
         tv_titulo = findViewById(R.id.tv_titulo);
@@ -124,12 +123,10 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         img_grande.setImageResource(ip1);
     }
 
-    public void acessaQR(View view){
+    public void acessaQR(View view) {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent it = new Intent(arg0.getContext(), qrcode.class);
-                startActivity(it);
             }
         });
     }
