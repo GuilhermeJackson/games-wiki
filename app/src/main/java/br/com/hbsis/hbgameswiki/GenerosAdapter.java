@@ -21,6 +21,7 @@ public class GenerosAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
 
+
     /**
      * Adaptador para os generos
      * <p>

@@ -54,7 +54,7 @@ public class PrincipalActivity extends AppCompatActivity {
     LinearLayout mainmenu, maincontent;
     Button btnMenu;
     Animation fromtop, frombottom;
-    ImageView avatar;
+    ImageView avatar, img_adicionar;
     TextView nomeUser, email, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
@@ -96,6 +96,7 @@ public class PrincipalActivity extends AppCompatActivity {
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
 
+<<<<<<< HEAD
         //Tela de cadastro de jogos
         img_adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +105,17 @@ public class PrincipalActivity extends AppCompatActivity {
                 startActivity(cadastroJogo);
             }
         });
+=======
+        //Entrando na tela de cadastro
+        img_adicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaDeCadastro = new Intent(PrincipalActivity.this, cadastroJogo.class);
+                startActivity(telaDeCadastro);
+            }
+        });
+
+>>>>>>> 8cab87518054416f771f02e5a3fad31587a59c33
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();
