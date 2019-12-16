@@ -63,15 +63,13 @@ public class cadastroJogo extends AppCompatActivity {
             public void onClick(View v) {
                 if (verificarJogo()) {
                     cadastrarJogo();
-                    Intent telaPrincipal = new Intent(cadastroJogo.this, PrincipalActivity.class);
-                    startActivity(telaPrincipal);
                 }
             }
         });
     }
     public boolean verificaNome(){
         boolean verificaNome = false;
-        if (getGameName().length() >= 1){
+        if (getGameName().length() >= 1 && (!getGameName().trim().equals(""))){
             verificaNome = true;
         }else {
             Toast.makeText(this, "O nome do jogo está vazio!!!", Toast.LENGTH_SHORT).show();
@@ -120,26 +118,21 @@ public class cadastroJogo extends AppCompatActivity {
         return gameDesc;
     }
 
-
-    public void cadastrarJogo() {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "game").build();
-
-        //Se o checkBox tiver selecionado, adiciona
+    public List listarGenero(){
         generos = new ArrayList<>();
         String generoStr = "";
-            if (checkBoxRPG.isChecked()) {
-                Generos geneross = new Generos(generoStr += checkBoxRPG.getText());
-                generos.add(new Generos(geneross.getGenero()));
-            }
-            if (checkBoxAcao.isChecked()) {
-                Generos geneross = new Generos(generoStr += checkBoxAcao.getText());
-                generos.add(new Generos(geneross.getGenero()));
-            }
-            if (checkBoxAventura.isChecked()) {
-                Generos geneross = new Generos(generoStr += checkBoxAventura.getText());
-                generos.add(new Generos(geneross.getGenero()));
-            }
+        if (checkBoxRPG.isChecked()) {
+            Generos geneross = new Generos(generoStr += checkBoxRPG.getText());
+            generos.add(new Generos(geneross.getGenero()));
+        }
+        if (checkBoxAcao.isChecked()) {
+            Generos geneross = new Generos(generoStr += checkBoxAcao.getText());
+            generos.add(new Generos(geneross.getGenero()));
+        }
+        if (checkBoxAventura.isChecked()) {
+            Generos geneross = new Generos(generoStr += checkBoxAventura.getText());
+            generos.add(new Generos(geneross.getGenero()));
+        }
         if (checkBoxEstrategia.isChecked()) {
             Generos geneross = new Generos(generoStr += checkBoxEstrategia.getText());
             generos.add(new Generos(geneross.getGenero()));
@@ -176,9 +169,18 @@ public class cadastroJogo extends AppCompatActivity {
             Generos geneross = new Generos(generoStr += checkBoxMMORPG.getText());
             generos.add(new Generos(geneross.getGenero()));
         }
+        return generos;
+    }
+
+    public void cadastrarJogo() {
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "game").build();
+
+        //Se o checkBox tiver selecionado, adiciona
+
 
         //Criando GenerosAdapter para exibir na lista de jogos da mainPrincipal
-        GenerosAdapter generosAdapter = new GenerosAdapter(generos,this);
+        GenerosAdapter generosAdapter = new GenerosAdapter(listarGenero(),this);
 
 
         String gameDescription = etDescricaoJogo.getText().toString();
@@ -200,5 +202,7 @@ public class cadastroJogo extends AppCompatActivity {
         textView8.setText(checkBoxes.toString());
 
         Toast.makeText(this, "Jogo criado com sucesso!!!", Toast.LENGTH_SHORT).show();
+        Intent telaPrincipal = new Intent(cadastroJogo.this, PrincipalActivity.class);
+        startActivity(telaPrincipal);
     }
 }
