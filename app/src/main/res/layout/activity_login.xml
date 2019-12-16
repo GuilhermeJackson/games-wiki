@@ -149,7 +149,9 @@
         app:layout_constraintVertical_bias="0.755"
         app:srcCompat="@mipmap/twitter_foreground" />
 
-    <ImageView
+
+
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/imageGoogle"
         android:layout_width="57dp"
         android:layout_height="47dp"

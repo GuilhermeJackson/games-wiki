@@ -195,10 +195,10 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
         //Ao clicar fora da barra ela some
-        maincontent.setOnClickListener(new View.OnClickListener() {
+        embacar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                fecharMenu();
             }
         });
 
@@ -233,7 +233,6 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void fecharMenu() {
-        maincontent.animate().translationX(-800);
         mainmenu.animate().translationX(-800);
         embacar.setX(1600);
     }
