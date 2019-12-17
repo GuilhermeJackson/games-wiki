@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
 
+            android:textColor="#757575"
     <LinearLayout
         android:id="@+id/mainmenu"
         android:layout_width="280dp"
@@ -119,7 +120,6 @@
             android:gravity="left|center_vertical"
             android:text="Sair"
             android:textAllCaps="false"
-            android:textColor="#757575"
             android:textSize="20dp" />
 
         <TextView
