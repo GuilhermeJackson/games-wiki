@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
@@ -102,6 +103,12 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
     @Override
     public int getItemCount() {
         return listaJogos.size();
+    }
+
+    public void setfilter(List<Jogos> resultJogos){
+        listaJogos = new ArrayList<>();
+        listaJogos.addAll(resultJogos);
+        notifyDataSetChanged();
     }
 
     // Ao extender a classe asbtrata RecyclerView.ViewHolder é nescessário implementar seu método abstrato MyViewHolder

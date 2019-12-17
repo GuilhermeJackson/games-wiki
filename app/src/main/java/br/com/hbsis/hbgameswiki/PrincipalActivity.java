@@ -2,26 +2,36 @@ package br.com.hbsis.hbgameswiki;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PrincipalActivity extends AppCompatActivity {
+
+    SearchView searchView;
 
     /**
      * Classe tela principal aonde será exibida todas as informações dos jogos
@@ -54,12 +64,64 @@ public class PrincipalActivity extends AppCompatActivity {
     LinearLayout mainmenu, maincontent;
     Button btnMenu;
     Animation fromtop, frombottom;
-    ImageView avatar;
+    ImageView avatar,pesquisa;
     TextView nomeUser, email, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchfile, menu);
+        final MenuItem myActionMenuItem=menu.findItem(R.id.search);
+        searchView=(SearchView) myActionMenuItem.getActionView();
+        changeSearchViewTextColor(searchView);
+        ((EditText)searchView.findViewById(R.id.search_src_text)).setHintTextColor(getResources().getColor(R.color.white));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(! searchView.isIconified()){
+                    searchView.setIconified(true);
+                }
+                myActionMenuItem.collapseActionView();
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    private List<Jogos> filter(List<Jogos> p1, String query){
+        query=query.toLowerCase();
+        final List<Jogos> filteredModeList=new ArrayList<>();
+        for(Jogos model:p1){
+            final String text = model.getTitulo().toLowerCase();
+            if(text.startsWith(query)){
+                filteredModeList.add(model);
+            }
+        }
+        return filteredModeList;
+    }
+
+    private void changeSearchViewTextColor(View view){
+        if (view != null){
+            if (view instanceof TextView){
+                ((TextView) view).setTextColor(Color.WHITE);
+                return;
+            }else if(view instanceof ViewGroup){
+                ViewGroup viewGroup = (ViewGroup) view;
+                for (int i=0; i<viewGroup.getChildCount(); i++){
+                    changeSearchViewTextColor(viewGroup.getChildAt(i));
+                }
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +137,7 @@ public class PrincipalActivity extends AppCompatActivity {
         btSobre = findViewById(R.id.btSobre);
         btSair = findViewById(R.id.btSair);
 
+
         //TextView
         nomeUser = findViewById(R.id.nomeUser);
         email = findViewById(R.id.email);
@@ -83,6 +146,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
         //ImageView
         avatar = findViewById(R.id.avatar);
+        pesquisa = findViewById(R.id.imageView2);
+
 
         //Animações
         fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
@@ -167,6 +232,8 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
 
+
+
         listaJogos = new ArrayList<>();
         /*
          * new Jogos() - criar um novo card
@@ -194,16 +261,8 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
-        //Ao clicar fora da barra ela some
-        maincontent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-
-    }
-    private void abrirMenu() {
+    private void abrirMenu(){
         maincontent.animate().translationX(0);
         mainmenu.animate().translationX(0);
         embacar.setX(0);
@@ -237,6 +296,8 @@ public class PrincipalActivity extends AppCompatActivity {
         mainmenu.animate().translationX(-800);
         embacar.setX(1600);
     }
+
+
 
 
 
