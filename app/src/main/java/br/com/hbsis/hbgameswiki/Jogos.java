@@ -3,10 +3,10 @@ package br.com.hbsis.hbgameswiki;
 import android.widget.Button;
 
 public class Jogos {
-    private Button btnShare;
+
     private String Titulo, Categoria, Descricao, Genero, Desenvolvedora;
     private int ImagemPequenaTP, ImagemGrandeTP, JogoFavorito, Avaliacao, MinValor, MaxValor;
-    private int ImagemPequena1TDJ, ImagemPequena2TDJ, ImagemPequena3TDJ, ImagemPequena4TDJ, ImagemPequena5TDJ, ImagemGrandeTDJ, QrCode;
+    private int ImagemPequena1TDJ, ImagemPequena2TDJ, ImagemPequena3TDJ, ImagemPequena4TDJ, ImagemPequena5TDJ, ImagemGrandeTDJ, QRCODE;
 
     public Jogos() {
     }
@@ -37,9 +37,9 @@ public class Jogos {
      * @Author Sandro Diego Adão
      */
 
-    public Jogos(int qrCode, String titulo, String categoria, String descricao, String genero, String desenvolvedora, int img_pequena_TP, int img_grande_TP, int avaliacao, int minValor, int maxValor, int jogoFavorito, int img_pequena_1_TDJ, int img_pequena_2_TDJ, int img_pequena_3_TDJ, int img_pequena_4_TDJ, int img_pequena_5_TDJ, int img_grande_TDJ) {
+    public Jogos(int QrCode, String titulo, String categoria, String descricao, String genero, String desenvolvedora, int img_pequena_TP, int img_grande_TP, int avaliacao, int minValor, int maxValor, int jogoFavorito, int img_pequena_1_TDJ, int img_pequena_2_TDJ, int img_pequena_3_TDJ, int img_pequena_4_TDJ, int img_pequena_5_TDJ, int img_grande_TDJ) {
         // Tela Principal
-        QrCode = qrCode;
+        QRCODE = QrCode;
         Titulo = titulo;
         Categoria = categoria;
         Descricao = descricao;
@@ -58,23 +58,14 @@ public class Jogos {
         ImagemPequena4TDJ = img_pequena_4_TDJ;
         ImagemPequena5TDJ = img_pequena_5_TDJ;
         ImagemGrandeTDJ = img_grande_TDJ;
-
     }
 
-    public Button getBtnShare() {
-        return btnShare;
+    public int getQRCODE() {
+        return QRCODE;
     }
 
-    public void setBtnShare(Button btnShare) {
-        this.btnShare = btnShare;
-    }
-
-    public int getQrCode() {
-        return QrCode;
-    }
-
-    public void setQrCode(int qrCode) {
-        QrCode = qrCode;
+    public void setQRCODE(int QRCODE) {
+        this.QRCODE = QRCODE;
     }
 
     public int getImagemPequena1TDJ() {
