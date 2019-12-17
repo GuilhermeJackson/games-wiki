@@ -31,7 +31,6 @@ import java.util.List;
 
 public class PrincipalActivity extends AppCompatActivity {
 
-    SearchView searchView;
 
     /**
      * Classe tela principal aonde será exibida todas as informações dos jogos
