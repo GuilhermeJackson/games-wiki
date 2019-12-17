@@ -25,7 +25,7 @@ public class DetalhesJogosActivity extends AppCompatActivity {
      */
 
     private TextView tv_titulo, tv_descricao, tv_categoria, tv_min_valor, tv_max_valor;
-    private ImageView img_grande, img_pequena_1, img_pequena_2, img_pequena_3, img_pequena_4, img_pequena_5, fav_icon;
+    private ImageView img_grande, img_pequena_1, img_pequena_2, img_pequena_3, img_pequena_4, img_pequena_5, fav_icon, btn_qrCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         img_pequena_4 = findViewById(R.id.img_pequena_4);
         img_pequena_5 = findViewById(R.id.img_pequena_5);
         fav_icon = findViewById(R.id.fav_icon);
+        btn_qrCode = findViewById(R.id.img_qrcode);
+
 
         // Variáveis Chaves
         Intent intent = getIntent();
@@ -58,6 +60,7 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         int ip4 = intent.getExtras().getInt("ImagemPequena4TDJ");
         int ip5 = intent.getExtras().getInt("ImagemPequena5TDJ");
         int ficon = intent.getExtras().getInt("JogoFavorito");
+        int btQrCode = intent.getExtras().getInt("QRCODE");
 
         // Atribuição de valores
         tv_titulo.setText(titulo);
@@ -70,6 +73,10 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         img_pequena_4.setImageResource(ip4);
         img_pequena_5.setImageResource(ip5);
         fav_icon.setImageResource(ficon);
+        btn_qrCode.setImageResource(btQrCode);
+
+        btn_qrCode.animate().translationY(-90).setDuration(400);
+        btn_qrCode.animate().alpha(1f).setDuration(1000);
     }
 
     /**
