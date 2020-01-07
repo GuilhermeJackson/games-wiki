@@ -7,8 +7,6 @@ import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -72,7 +70,7 @@ public class SplashScreenActivity extends AppCompatActivity {
      */
     private void mostrarLogin() {
         Intent intent = new Intent(
-                SplashScreenActivity.this, LoginActivity.class
+                SplashScreenActivity.this, PrincipalActivity.class
         );
         startActivity(intent);
         finish();
@@ -108,7 +106,9 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
 
-                if (preferences.contains("open")) {
+                String user = preferences.getString("usuario","");
+
+                if (preferences.contains("open") && !user.equals("")) {
                     mostrarLogin();
                 } else {
                     adicionarPreferenceJaAbriu(preferences);
