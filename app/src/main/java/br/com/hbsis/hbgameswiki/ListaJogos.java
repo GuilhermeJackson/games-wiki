@@ -17,7 +17,7 @@ import java.util.List;
 public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
 
     private Context context;
-    private List<Jogos> listaJogos;
+    private List<Game> listaGames;
 
     /**
      * Classe para listar novos jogos
@@ -25,12 +25,12 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
      * Este método utiliza uma lista do tipo Jogos para inflar a view com as informações dos jogos
      *
      * @param context    Define o contexto
-     * @param listaJogos Defina uma lista do tipo Jogos
+     * @param listaGames Defina uma lista do tipo Jogos
      * @Author Sandro Diego Adão
      */
-    public ListaJogos(Context context, List<Jogos> listaJogos) {
+    public ListaJogos(Context context, List<Game> listaGames) {
         this.context = context;
-        this.listaJogos = listaJogos;
+        this.listaGames = listaGames;
     }
 
     @Override
@@ -59,14 +59,13 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-
-        holder.tv_titulo.setText(listaJogos.get(position).getTitulo());
-        holder.tv_desenvolvedora.setText(listaJogos.get(position).getDesenvolvedora());
-        holder.tv_genero.setText(listaJogos.get(position).getGenero());
-        holder.img_pequena.setImageResource(listaJogos.get(position).getImagemPequenaTP());
-        holder.img_grande.setImageResource(listaJogos.get(position).getImagemGrandeTP());
-        holder.rb_avaliacao.setRating(listaJogos.get(position).getAvaliacao());
-        holder.img_favorito.setImageResource(listaJogos.get(position).getJogoFavorito());
+        holder.tv_titulo.setText(listaGames.get(position).getGameName());
+        //holder.tv_desenvolvedora.setText(listaJogos.get(position).getDesenvolvedora());
+        holder.tv_genero.setText(listaGames.get(position).getGameTags());
+       //holder.img_pequena.setImageResource(listaJogos.get(position).getImagemPequenaTP());
+       //holder.img_grande.setImageResource(listaJogos.get(position).getImagemGrandeTP());
+        // holder.rb_avaliacao.setRating(listaJogos.get(position).getAvaliacao());
+        //holder.img_favorito.setImageResource(listaJogos.get(position).getJogoFavorito());
         holder.card_jogos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,23 +74,23 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
                 // Passa os valores no intent.putExtra
 
                 // Salva os valores das intentes por indice na Tela Principal
-                intent.putExtra("Titulo", listaJogos.get(position).getTitulo());
-                intent.putExtra("Descricao", listaJogos.get(position).getDescricao());
-                intent.putExtra("Desenvolvedora", listaJogos.get(position).getDesenvolvedora());
-                intent.putExtra("Genero", listaJogos.get(position).getGenero());
-                intent.putExtra("Avaliacao", listaJogos.get(position).getAvaliacao());
-                intent.putExtra("JogoFavorito", listaJogos.get(position).getJogoFavorito());
-                intent.putExtra("ImagemPequenaTP", listaJogos.get(position).getImagemPequenaTP());
-                intent.putExtra("ImagemGrandeTP", listaJogos.get(position).getImagemGrandeTP());
+                intent.putExtra("Titulo", listaGames.get(position).getGameName());
+                intent.putExtra("Descricao", listaGames.get(position).getGameDescription());
+                //intent.putExtra("Desenvolvedora", listaGames.get(position).getDesenvolvedora());
+                intent.putExtra("Genero", listaGames.get(position).getGameTags());
+                //intent.putExtra("Avaliacao", listaGames.get(position).getAvaliacao());
+                //intent.putExtra("JogoFavorito", listaGames.get(position).getJogoFavorito());
+                //intent.putExtra("ImagemPequenaTP", listaGames.get(position).getImagemPequenaTP());
+                //intent.putExtra("ImagemGrandeTP", listaGames.get(position).getImagemGrandeTP());
                 // Salva os valores das intentes por indice na Tela Detalhes Jogos
-                intent.putExtra("MinValor", listaJogos.get(position).getMinValor());
-                intent.putExtra("MaxValor", listaJogos.get(position).getMaxValor());
-                intent.putExtra("ImagemPequena1TDJ", listaJogos.get(position).getImagemPequena1TDJ());
-                intent.putExtra("ImagemPequena2TDJ", listaJogos.get(position).getImagemPequena2TDJ());
-                intent.putExtra("ImagemPequena3TDJ", listaJogos.get(position).getImagemPequena3TDJ());
-                intent.putExtra("ImagemPequena4TDJ", listaJogos.get(position).getImagemPequena4TDJ());
-                intent.putExtra("ImagemPequena5TDJ", listaJogos.get(position).getImagemPequena5TDJ());
-                intent.putExtra("ImagemGrandeTDJ", listaJogos.get(position).getImagemGrandeTDJ());
+                //intent.putExtra("MinValor", listaGames.get(position).getMinValor());
+                //intent.putExtra("MaxValor", listaGames.get(position).getMaxValor());
+                //intent.putExtra("ImagemPequena1TDJ", listaGames.get(position).getImagemPequena1TDJ());
+                //intent.putExtra("ImagemPequena2TDJ", listaGames.get(position).getImagemPequena2TDJ());
+                //intent.putExtra("ImagemPequena3TDJ", listaGames.get(position).getImagemPequena3TDJ());
+                //intent.putExtra("ImagemPequena4TDJ", listaGames.get(position).getImagemPequena4TDJ());
+                //intent.putExtra("ImagemPequena5TDJ", listaGames.get(position).getImagemPequena5TDJ());
+                //intent.putExtra("ImagemGrandeTDJ", listaGames.get(position).getImagemGrandeTDJ());
 
                 // Inicia a activity
                 context.startActivity(intent);
@@ -101,7 +100,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return listaJogos.size();
+        return listaGames.size();
     }
 
     // Ao extender a classe asbtrata RecyclerView.ViewHolder é nescessário implementar seu método abstrato MyViewHolder

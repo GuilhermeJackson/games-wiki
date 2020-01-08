@@ -201,11 +201,7 @@
                 android:layout_marginTop="320dp"
                 android:text="Virtual"
                 app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
-                app:layout_constraintHorizontal_bias="0.132"
-=======
                 app:layout_constraintHorizontal_bias="0.02"
->>>>>>> 8cab87518054416f771f02e5a3fad31587a59c33
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

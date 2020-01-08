@@ -2,7 +2,9 @@ package br.com.hbsis.hbgameswiki;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,12 +18,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class PrincipalActivity extends AppCompatActivity {
+    public static final int LOGIN_REQUEST_CODE = 111;
 
     /**
      * Classe tela principal aonde será exibida todas as informações dos jogos
@@ -29,17 +35,17 @@ public class PrincipalActivity extends AppCompatActivity {
      * Classe aonde serão definidos as listas, ViewsPagers e Adapters.
      * para listar um jogo na lista de jogos utilize os método abaixo:
      * Adicionar um jogo na lista jogos <code>listaJogos.add(new Jogos(String titulo, String categoria, String descricao, String genero, String desenvolvedora, int img_pequena_TP, int img_grande_TP, int avaliacao, int minValor, int maxValor, int jogoFavorito, int img_pequena_1_TDJ, int img_pequena_2_TDJ, int img_pequena_3_TDJ, int img_pequena_4_TDJ, int img_pequena_5_TDJ, int img_grande_TDJ));</code>
-     *
+     * <p>
      * Para listar um jogo na lista destaque utilize os método abaixo:
      * Adicionar um jogo na lista destaque <code>destaqueJogos.add(new DestaqueJogos(int imagem, String titulo, String descricao));</code>
-     *
+     * <p>
      * Para listar um genero novo na lista utilize o método abaixo:
      * Adicionar um genêro na lista generos <code>generos.add(new Generos(String genero));</code>
      *
      * @Author Sandro Diego Adão
      */
 
-    List<Jogos> listaJogos;
+    ArrayList<Game> listaJogos = new ArrayList<Game>();
     List<DestaqueJogos> destaqueJogos;
     List<Generos> generos;
     ViewPager vp_destaque_jogos;
@@ -50,15 +56,17 @@ public class PrincipalActivity extends AppCompatActivity {
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ImageView imagemIcon, img_adicionar;
 
+    RecyclerView mrcv_lista_jogos;
+    ListaJogos myAdapter;
+
     RelativeLayout embacar;
     LinearLayout mainmenu, maincontent;
     Button btnMenu;
     Animation fromtop, frombottom;
-    ImageView avatar, img_adicionar;
+    ImageView avatar;
     TextView nomeUser, email, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
-
 
 
     @Override
@@ -66,7 +74,6 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mains);
         //getSupportActionBar().hide();
-
 
         //Button
         btEdit = findViewById(R.id.btEdit);
@@ -96,26 +103,15 @@ public class PrincipalActivity extends AppCompatActivity {
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
 
-<<<<<<< HEAD
-        //Tela de cadastro de jogos
-        img_adicionar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cadastroJogo = new Intent(PrincipalActivity.this, cadastroJogo.class);
-                startActivity(cadastroJogo);
-            }
-        });
-=======
         //Entrando na tela de cadastro
         img_adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent telaDeCadastro = new Intent(PrincipalActivity.this, cadastroJogo.class);
-                startActivity(telaDeCadastro);
+                startActivityForResult(telaDeCadastro, LOGIN_REQUEST_CODE);
             }
         });
 
->>>>>>> 8cab87518054416f771f02e5a3fad31587a59c33
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();
@@ -186,25 +182,28 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
+        //listaJogos.add(new Jogos("Fallout IV - Standart Edition", "Jogos", "", "• RPG", "Bethesda Game Studios", R.mipmap.fallout4_logo, R.mipmap.fallout4_logo, 2, 50, 150, R.mipmap.nao_favorito_icon_foreground, R.mipmap.fallout4_logo, R.mipmap.fallout4_1_wallpaper, R.mipmap.fallout4_2_wallpaper, R.mipmap.fallout4_3_wallpaper, R.mipmap.fallout4_4_wallpaper, R.mipmap.fallout4_logo));
+        //listaJogos.add(new Game("GTA", "Jogo de matar as pessoas atropeladas e metralhadas.", generos.toString()));
 
-        listaJogos = new ArrayList<>();
-        /*
-         * new Jogos() - criar um novo card
-         * */
-        listaJogos.add(new Jogos("Fallout IV - Standart Edition", "Jogos", "", "• RPG", "Bethesda Game Studios", R.mipmap.fallout4_logo, R.mipmap.fallout4_logo, 2, 50, 150, R.mipmap.nao_favorito_icon_foreground, R.mipmap.fallout4_logo, R.mipmap.fallout4_1_wallpaper, R.mipmap.fallout4_2_wallpaper, R.mipmap.fallout4_3_wallpaper, R.mipmap.fallout4_4_wallpaper, R.mipmap.fallout4_logo));
-        listaJogos.add(new Jogos("Super Mario World", "Jogos", "", "• Plataforma  • Ação", "Nintendo Co., Ltd.", R.mipmap.supermario_logo, R.mipmap.supermario_logo, 5, 10, 20, R.mipmap.favorito_icon_foreground, R.mipmap.supermario_logo, R.mipmap.spm_1_wallpaper, R.mipmap.spm_2_wallpaper, R.mipmap.spm_3_wallpaper, R.mipmap.spm_4_wallpaper, R.mipmap.supermario_logo));
-        listaJogos.add(new Jogos("Grand Theft Auto V", "Jogos", "", "• Ação  • Aventura", "Rockstar North.", R.mipmap.gta5_logo, R.mipmap.gta5_logo, 5, 80, 120, R.mipmap.favorito_icon_foreground, R.mipmap.gta5_logo, R.mipmap.gta5_1_wallpaper, R.mipmap.gta5_2_wallpaper, R.mipmap.gta5_3_wallpaper, R.mipmap.gta5_4_wallpaper, R.mipmap.gta5_logo));
-        listaJogos.add(new Jogos("The last of us", "Jogos", "", "• Ação  • Aventura  • Sobrevivência", "Konami", R.mipmap.tlou_logo, R.mipmap.tlou_logo, 3, 120, 140, R.mipmap.nao_favorito_icon_foreground, R.mipmap.tlou_logo, R.mipmap.tlou_1_wallpaper, R.mipmap.tlou_2_wallpaper, R.mipmap.tlou_3_wallpaper, R.mipmap.tlou_4_wallpaper, R.mipmap.tlou_logo));
-        listaJogos.add(new Jogos("Far Cry 5", "Jogos", "", "• FPS  • Ação", "Ubisoft", R.mipmap.farcry5_logo, R.mipmap.farcry5_logo, 5, 150, 300, R.mipmap.favorito_icon_foreground, R.mipmap.farcry5_logo, R.mipmap.farcry5_1_wallpaper, R.mipmap.farcry5_2_wallpaper, R.mipmap.farcry5_3_wallpaper, R.mipmap.farcry5_4_wallpaper, R.mipmap.farcry5_logo));
 
-        RecyclerView mrcv_lista_jogos = findViewById(R.id.rcv_principal);
-        ListaJogos myAdapter = new ListaJogos(this, listaJogos);
+        mrcv_lista_jogos = findViewById(R.id.rcv_principal);
+        myAdapter = new ListaJogos(this, listaJogos);
+
+        mrcv_lista_jogos.setLayoutManager(new GridLayoutManager(this, 1));
+        mrcv_lista_jogos.setAdapter(myAdapter);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "game").build();
+
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(() -> {
+            listaJogos.addAll(db.gameDao().getAll());
+            myAdapter.notifyDataSetChanged();
+        });
 
         /*
          * spanCount Define a quantidade de cards que irá aparecer na horizontal
          * */
-        mrcv_lista_jogos.setLayoutManager(new GridLayoutManager(this, 1));
-        mrcv_lista_jogos.setAdapter(myAdapter);
 
         imagemIcon = findViewById(R.id.img_filtro);
         imagemIcon.setOnClickListener(new View.OnClickListener() {
@@ -221,8 +220,32 @@ public class PrincipalActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "game").build();
+
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(() -> {
+
+            listaJogos.add(db.gameDao().pegaUltimoJogo());
+
+            PrincipalActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    myAdapter.notifyDataSetChanged();
+                }
+            });
+
+
+        });
+        // Do something with the contact here (bigger example below)
 
     }
+
     private void abrirMenu() {
         maincontent.animate().translationX(0);
         mainmenu.animate().translationX(0);

@@ -30,6 +30,12 @@ public interface GameDao {
     @Query("SELECT * FROM game WHERE game_tags LIKE '%' || :tag || '%'")
     List<Game> searchByTag(String tag);
 
+    @Query("SELECT * FROM game WHERE game_name = :name")
+    Game inserirGame(String name);
+
+    @Query("SELECT * FROM game WHERE gId = (SELECT MAX(gId)  FROM game);")
+    Game pegaUltimoJogo();
+
     @Insert
     void insertAll(Game... games);
 

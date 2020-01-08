@@ -6,12 +6,10 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,13 +23,12 @@ import java.util.concurrent.Executors;
 public class cadastroJogo extends AppCompatActivity {
     EditText etNomeJogo, etDescricaoJogo;
     Button btnCadastrarJogo;
-<<<<<<< HEAD
-=======
+
     CheckBox checkBoxRPG, checkBoxAcao, checkBoxAventura, checkBoxEstrategia, checkBoxHorror, checkBoxFPS, checkBoxTPS, checkBox2D, checkBox3D, checkBoxVirtual, checkBoxPlataforma, checkBoxMMORPG;
+
     List<Generos> generos;
     List<CheckBox> checkBoxes = new ArrayList<>();
-    TextView textView8;
->>>>>>> 8cab87518054416f771f02e5a3fad31587a59c33
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +37,10 @@ public class cadastroJogo extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         //actionBar.hide();
 
-        textView8 = findViewById(R.id.textView8);
-
-        //EditText
         etNomeJogo = findViewById(R.id.etNomeJogo);
         etDescricaoJogo = findViewById(R.id.etDescricaoJogo);
-
-        //Button
         btnCadastrarJogo = findViewById(R.id.btnCadastrarJogo);
-
-        //CheckBox
+        //cbGenero = findViewById(R.id.cbGenero);
         checkBoxes.add(checkBoxRPG = findViewById(R.id.checkBoxRPG));
         checkBoxes.add(checkBoxAcao = findViewById(R.id.checkBoxAcao));
         checkBoxes.add(checkBoxAventura = findViewById(R.id.checkBoxAventura));
@@ -63,7 +54,6 @@ public class cadastroJogo extends AppCompatActivity {
         checkBoxes.add(checkBoxPlataforma = findViewById(R.id.checkBoxPlataforma));
         checkBoxes.add(checkBoxMMORPG = findViewById(R.id.checkBoxMMORP));
 
-
         btnCadastrarJogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,16 +63,7 @@ public class cadastroJogo extends AppCompatActivity {
             }
         });
     }
-<<<<<<< HEAD
-    public String getNome() {
-        String nome = String.valueOf(etNomeJogo.getText());
-        return nome;
-    }
 
-    public String getDesc() {
-        String desc = String.valueOf(etDescricaoJogo.getText());
-        return desc;
-=======
     public boolean verificaNome(){
         boolean verificaNome = false;
         if (getGameName().length() >= 1 && (!getGameName().trim().equals(""))){
@@ -106,13 +87,13 @@ public class cadastroJogo extends AppCompatActivity {
     }
 
     public boolean verificarDescJogo(){
-            boolean Gamedec = false;
-            if (getGameDesc().length() >= 10){
-                Gamedec = true;
-            } else {
-                Toast.makeText(this, "Descrição deverá conter pelo menos 10 caracteres!!!", Toast.LENGTH_SHORT).show();
-            }
-            return Gamedec;
+        boolean Gamedec = false;
+        if (getGameDesc().length() >= 10){
+            Gamedec = true;
+        } else {
+            Toast.makeText(this, "Descrição deverá conter pelo menos 10 caracteres!!!", Toast.LENGTH_SHORT).show();
+        }
+        return Gamedec;
     }
 
     public boolean verificarJogo(){
@@ -134,7 +115,7 @@ public class cadastroJogo extends AppCompatActivity {
         return gameDesc;
     }
 
-    public List listarGenero(){
+    public List listarGenero() {
         generos = new ArrayList<>();
         String generoStr = "";
         if (checkBoxRPG.isChecked()) {
@@ -166,7 +147,8 @@ public class cadastroJogo extends AppCompatActivity {
             generos.add(new Generos(geneross.getGenero()));
         }
         if (checkBox2D.isChecked()) {
-            Generos geneross = new Generos(generoStr += checkBox2D.getText());;
+            Generos geneross = new Generos(generoStr += checkBox2D.getText());
+            ;
             generos.add(new Generos(geneross.getGenero()));
         }
         if (checkBox3D.isChecked()) {
@@ -186,50 +168,26 @@ public class cadastroJogo extends AppCompatActivity {
             generos.add(new Generos(geneross.getGenero()));
         }
         return generos;
->>>>>>> 8cab87518054416f771f02e5a3fad31587a59c33
     }
-
     public void cadastrarJogo() {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "game").build();
-<<<<<<< HEAD
-        String nome = etNomeJogo.getText().toString();
-        String descricao = etDescricaoJogo.getText().toString();
-
-        Game game = new Game(nome, descricao);
-
-
-
-=======
-
-        //Se o checkBox tiver selecionado, adiciona
-
 
         //Criando GenerosAdapter para exibir na lista de jogos da mainPrincipal
-        GenerosAdapter generosAdapter = new GenerosAdapter(listarGenero(),this);
+        GenerosAdapter generosAdapter = new GenerosAdapter(listarGenero(), this);
 
-
-        String gameDescription = etDescricaoJogo.getText().toString();
         String gameTag = generos.toString();
 
         Game game = new Game(getGameName(), getGameDesc(), gameTag);
 
-
         Executor myExecutor = Executors.newSingleThreadExecutor();
         myExecutor.execute(() -> {
             db.gameDao().insertAll(game);
-            //Game JogoCadastrado = db.gameDao().loadAllByIds(getGameName());
-            //System.out.println("Jogo inserido: ID = " + JogoCadastrado.getGId());
+            Game JogoCadastrado = db.gameDao().inserirGame(getGameName());
+            System.out.println("Jogo inserido: ID = " + JogoCadastrado.getGId());
         });
-
-
-
-
-        textView8.setText(checkBoxes.toString());
-
         Toast.makeText(this, "Jogo criado com sucesso!!!", Toast.LENGTH_SHORT).show();
-        Intent telaPrincipal = new Intent(cadastroJogo.this, PrincipalActivity.class);
-        startActivity(telaPrincipal);
->>>>>>> 8cab87518054416f771f02e5a3fad31587a59c33
+        setResult(RESULT_OK);
+        finish();
     }
 }
