@@ -6,29 +6,25 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logotransparente"
-        android:label="@string/app_name"
+        android:label="HB GAMES WIKI"
         android:roundIcon="@mipmap/logotransparente"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name="br.com.hbsis.hbgameswiki.PrincipalActivity"/>
         <activity android:name="br.com.hbsis.hbgameswiki.SplashScreenActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity android:name="br.com.hbsis.hbgameswiki.LoginActivity" />
         <activity android:name="br.com.hbsis.hbgameswiki.MainActivity" />
         <activity android:name="br.com.hbsis.hbgameswiki.cadastroJogo"/>
-
-
-
         <activity android:name="br.com.hbsis.hbgameswiki.RegistroActivity" />
         <activity android:name="br.com.hbsis.hbgameswiki.SobreActivity" />
         <activity android:name="br.com.hbsis.hbgameswiki.ListaJogos" />
         <activity android:name="br.com.hbsis.hbgameswiki.DetalhesJogosActivity" />
     </application>
+
 </manifest>

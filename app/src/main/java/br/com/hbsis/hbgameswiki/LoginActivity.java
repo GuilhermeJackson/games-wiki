@@ -1,6 +1,7 @@
 package br.com.hbsis.hbgameswiki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -80,6 +81,11 @@ public class LoginActivity extends AppCompatActivity {
             AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                     AppDatabase.class, "user").build();
 
+            SharedPreferences sp = getSharedPreferences("prefLogin", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("usuario",usuarioInserido);
+            editor.putString("senha", senhaInserida);
+            editor.apply();
 
             Executor myExecutor = Executors.newSingleThreadExecutor();
             myExecutor.execute(() -> {

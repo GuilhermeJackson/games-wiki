@@ -92,6 +92,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
                 intent.putExtra("ImagemPequena4TDJ", listaJogos.get(position).getImagemPequena4TDJ());
                 intent.putExtra("ImagemPequena5TDJ", listaJogos.get(position).getImagemPequena5TDJ());
                 intent.putExtra("ImagemGrandeTDJ", listaJogos.get(position).getImagemGrandeTDJ());
+                intent.putExtra("QRCODE", listaJogos.get(position).getQRCODE());
 
                 // Inicia a activity
                 context.startActivity(intent);
@@ -113,6 +114,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
         ImageView img_pequena, img_grande;
         CardView card_jogos;
         ImageView img_favorito;
+        ImageView btn_qrcode;
 
         // Método da classe abstrata ViewHolder
         public MyViewHolder(View itemView) {
@@ -126,6 +128,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
             rb_avaliacao = itemView.findViewById(R.id.rb_avaliacao);
             img_favorito = itemView.findViewById(R.id.favorito_icon);
             card_jogos = itemView.findViewById(R.id.card_jogo);
+            btn_qrcode = itemView.findViewById(R.id.img_qrcode);
         }
     }
 }
