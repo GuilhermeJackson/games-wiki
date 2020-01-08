@@ -77,7 +77,7 @@ public class SplashScreenActivity extends AppCompatActivity {
      */
     private void mostrarLogin() {
         Intent intent = new Intent(
-                SplashScreenActivity.this, LoginActivity.class
+                SplashScreenActivity.this, PrincipalActivity.class
         );
         startActivity(intent);
         finish();
@@ -117,7 +117,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 String senha = sp.getString("senha","");
 
                 if (preferences.contains("open") && !usuario.equals("")) {
-                    mostrarPrincipal(usuario,senha);
+                    mostrarLogin();
                 } else {
                     adicionarPreferenceJaAbriu(preferences);
                     mostrarLogin();
