@@ -117,6 +117,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 String senha = sp.getString("senha","");
                 String user = preferences.getString("usuario","");
 
+
                 if (preferences.contains("open") && !user.equals("")) {
                     mostrarLogin();
                 } else {

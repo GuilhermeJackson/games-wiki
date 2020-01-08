@@ -4,10 +4,14 @@ import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -56,6 +60,7 @@ public class PrincipalActivity extends AppCompatActivity{
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     ImageView imagemIcon;
+    EditText edt_barra_pesquisa;
 
     RelativeLayout embacar;
     LinearLayout mainmenu, maincontent;
@@ -66,10 +71,12 @@ public class PrincipalActivity extends AppCompatActivity{
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
 
+
     /**
      *   Variável constante para verificação do SignIn
      */
     static final int GOOGLE_SIGN = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +166,9 @@ public class PrincipalActivity extends AppCompatActivity{
         setContentView(R.layout.activity_mains);
         //getSupportActionBar().hide();
 
+        // Edit Text
+        edt_barra_pesquisa = findViewById(R.id.edt_barra_pesquisa);
+
 
 
         //Button
@@ -192,8 +202,6 @@ public class PrincipalActivity extends AppCompatActivity{
         maincontent = findViewById(R.id.linearLayout22);
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
-
-
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();
@@ -278,11 +286,41 @@ public class PrincipalActivity extends AppCompatActivity{
         RecyclerView mrcv_lista_jogos = findViewById(R.id.rcv_principal);
         ListaJogos myAdapter = new ListaJogos(this, listaJogos);
 
+        edt_barra_pesquisa.addTextChangedListener(new TextWatcher() {
+            final Handler handler = new Handler();
+            Runnable runnable;
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.removeCallbacks(runnable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //show some progress, because you can access UI here
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        myAdapter.getFilter().filter(edt_barra_pesquisa.getText());
+                    }
+                };
+                handler.postDelayed(runnable, 500);
+            }
+        });
+
+
         /*
          * spanCount Define a quantidade de cards que irá aparecer na horizontal
          * */
+
         mrcv_lista_jogos.setLayoutManager(new GridLayoutManager(this, 1));
         mrcv_lista_jogos.setAdapter(myAdapter);
+
 
         imagemIcon = findViewById(R.id.img_filtro);
         imagemIcon.setOnClickListener(new View.OnClickListener() {
@@ -307,6 +345,15 @@ public class PrincipalActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+
+    private void abrirMenu() {
+        maincontent.animate().translationX(0);
+        mainmenu.animate().translationX(0);
+        embacar.setX(0);
+        embacar.bringToFront();
+        mainmenu.bringToFront();
     }
 
     /**
