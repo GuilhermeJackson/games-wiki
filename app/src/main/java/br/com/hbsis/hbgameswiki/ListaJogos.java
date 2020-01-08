@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,12 +14,14 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
+public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> implements Filterable {
 
     private Context context;
     private List<Jogos> listaJogos;
+    private List<Jogos> listaJogosFiltrados;
 
     /**
      * Classe para listar novos jogos
@@ -103,6 +107,36 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
     @Override
     public int getItemCount() {
         return listaJogos.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String Key = charSequence.toString();
+                if (Key.isEmpty()) {
+                    listaJogosFiltrados = listaJogos;
+                } else {
+                    List<Jogos> filtrados = new ArrayList<>();
+                    for (Jogos produto : listaJogos) {
+                        if (produto.getTitulo().toLowerCase().contains(Key.toLowerCase())) {
+                            filtrados.add(produto);
+                        }
+                    }
+                    listaJogosFiltrados = filtrados;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = listaJogosFiltrados;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                listaJogosFiltrados = (List<Jogos>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     // Ao extender a classe asbtrata RecyclerView.ViewHolder é nescessário implementar seu método abstrato MyViewHolder
