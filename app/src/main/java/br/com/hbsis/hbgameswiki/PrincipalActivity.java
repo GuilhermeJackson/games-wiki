@@ -4,7 +4,6 @@ import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -63,39 +62,27 @@ public class PrincipalActivity extends AppCompatActivity{
     Button btnMenu;
     Animation fromtop, frombottom;
     ImageView avatar;
-    TextView nomeUser, email, tituloSobre, version;
+    TextView nomeUser, emailUser, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
 
+    /**
+     *   Variável constante para verificação do SignIn
+     */
     static final int GOOGLE_SIGN = 123;
-    private static final String TAG = "SignInActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
-
         String usuario = preferences.getString("usuario","");
 
         if(usuario.equals("")) {
-
-            List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    new AuthUI.IdpConfig.EmailBuilder().build());
-
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .setIsSmartLockEnabled(false)
-                            .build(),
-                    GOOGLE_SIGN);
-
+            SignInEmail();
         }else{
             tudo();
         }
-
 
     }
 
@@ -122,7 +109,7 @@ public class PrincipalActivity extends AppCompatActivity{
         //de cima
         avatar.startAnimation(fromtop);
         nomeUser.startAnimation(fromtop);
-        email.startAnimation(fromtop);
+        emailUser.startAnimation(fromtop);
     }
 
     public void telaSobre(View view) {
@@ -146,9 +133,9 @@ public class PrincipalActivity extends AppCompatActivity{
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Log.e("NNNNNNNNNNNNNNNN",response.getEmail());
                 tudo();
                 updateUI(user);
+
 
 
                 // ...
@@ -161,10 +148,17 @@ public class PrincipalActivity extends AppCompatActivity{
         }
     }
 
-
+    /**
+     *
+     *  Método que contém toda a parte visual da activity principal
+     *
+     *
+     *
+     */
     private void tudo(){
         setContentView(R.layout.activity_mains);
         //getSupportActionBar().hide();
+
 
 
         //Button
@@ -176,9 +170,14 @@ public class PrincipalActivity extends AppCompatActivity{
 
         //TextView
         nomeUser = findViewById(R.id.nomeUser);
-        email = findViewById(R.id.email);
+        emailUser = findViewById(R.id.email);
         tituloSobre = findViewById(R.id.tituloSobre);
         version = findViewById(R.id.version);
+
+        //SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
+        nomeUser.setText(preferences.getString("nome","User Name"));
+        emailUser.setText(preferences.getString("usuario",""));
 
         //ImageView
         avatar = findViewById(R.id.avatar);
@@ -301,9 +300,75 @@ public class PrincipalActivity extends AppCompatActivity{
             }
         });
 
+        btSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSair();
+            }
+        });
+
+    }
+
+    /**
+     *  Método que contém o login com o email e senha via Firebase
+     *
+     *  Neste método, temos a lista dos providers para que possamos
+     *  realizar o login e/ou registro. Inicia uma activity esperando
+     *  um resultado para poder realizar a autenticação do firebase
+     *
+     * @author Matheus Geiser <matheusgeiser@gmail.com>
+     *
+     */
+    private void SignInEmail(){
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build());
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false)
+                        .build(),
+                GOOGLE_SIGN);
+    }
+
+    /**
+     *  Método que contém a ação do botão de logout
+     *
+     *  Com o sharedPreferences é setado a key do usuario como vazia
+     *  para que na verificação do onCreate aconteça o pedido para fazer
+     *  o login, pois o usuário não está logado.
+     *
+     * @author Matheus Geiser <matheusgeiser@gmail.com>
+     *
+     */
+    private void btnSair(){
+
+        SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString("usuario","");
+        edit.apply();
+
+        fecharMenu();
+        SignInEmail();
+
     }
 
 
+
+
+    /**
+     *
+     *  Método que salva as informações do usuário logado
+     *
+     * O parametro user contem todas as informações do usuario que
+     * foi logado. A partir disso as informações são salvas no
+     * SharedPreferences do usuario.
+     *
+     * @author Matheus Geiser <matheusgeiser@gmail.com>
+     *
+     * @param user
+     */
     public void updateUI(FirebaseUser user) {
         if (user != null) {
             String name = user.getDisplayName();
@@ -315,8 +380,10 @@ public class PrincipalActivity extends AppCompatActivity{
             editor.putString("nome",name);
             editor.apply();
 
+            //Adicionando o nome e o email à sideBar
+            nomeUser.setText(name);
+            emailUser.setText(email);
 
-            Log.e("USUARIO",name+" "+email);
         }
     }
 
