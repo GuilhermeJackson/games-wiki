@@ -94,31 +94,6 @@ public class PrincipalActivity extends AppCompatActivity{
     }
 
 
-
-    private void abrirMenu() {
-        maincontent.animate().translationX(0);
-        mainmenu.animate().translationX(0);
-        embacar.setX(0);
-        embacar.bringToFront();
-        mainmenu.bringToFront();
-
-        //Iniciando as animações
-
-        // de baixo
-        btEdit.startAnimation(frombottom);
-        btFavoritos.startAnimation(frombottom);
-        btConfig.startAnimation(frombottom);
-        btSobre.startAnimation(frombottom);
-        btSair.startAnimation(frombottom);
-        tituloSobre.startAnimation(frombottom);
-        version.startAnimation(frombottom);
-
-        //de cima
-        avatar.startAnimation(fromtop);
-        nomeUser.startAnimation(fromtop);
-        emailUser.startAnimation(fromtop);
-    }
-
     public void telaSobre(View view) {
         Intent intent = new Intent(PrincipalActivity.this, SobreActivity.class);
         startActivity(intent);
@@ -399,7 +374,7 @@ public class PrincipalActivity extends AppCompatActivity{
         fecharMenu();
         SignInEmail();
     }
-}
+
     /**
      *
      *  Método que salva as informações do usuário logado
