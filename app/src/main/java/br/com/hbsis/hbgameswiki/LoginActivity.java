@@ -3,26 +3,53 @@ package br.com.hbsis.hbgameswiki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity {
+
+
+    private FirebaseAuth mAuth;
+    GoogleSignInClient mGoogleSignInClient;
+
     Button btnLogin;
     EditText edUsuario, edSenha;
     boolean isClicked;
+    SignInButton signInButton;
+    TextView statusTextView;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        signInButton = findViewById(R.id.imageGoogle);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        statusTextView = findViewById(R.id.textView2);
 
         btnLogin = findViewById(R.id.btnLogin);
         edUsuario = findViewById(R.id.edUsuario);
@@ -73,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+
     /**
      * Recebe o boolean isLoginValid para verificar se o usuário está cadastrado no banco de dados;
      * o usuário cadastrado é passado pelo parâmetro u; e a senha inserida no campo de texto é passada
@@ -100,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 this, PrincipalActivity.class
         );
         startActivity(intent);
-        finish();
+
     }
 
     public void mostrarRegistro(View view) {
@@ -120,6 +148,19 @@ public class LoginActivity extends AppCompatActivity {
         isClicked = false;
 
     }
+
+
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+
+            Log.e("USUARIO",name+" "+email);
+            System.out.println();
+        }
+    }
+
 
 
 }

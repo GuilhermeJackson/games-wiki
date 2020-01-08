@@ -115,8 +115,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                 SharedPreferences sp = getSharedPreferences("prefLogin", MODE_PRIVATE);
                 String usuario = sp.getString("usuario","");
                 String senha = sp.getString("senha","");
+                String user = preferences.getString("usuario","");
 
-                if (preferences.contains("open") && !usuario.equals("")) {
+
+                if (preferences.contains("open") && !user.equals("")) {
                     mostrarLogin();
                 } else {
                     adicionarPreferenceJaAbriu(preferences);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.hbsis.hbgameswiki">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -9,20 +10,21 @@
         android:roundIcon="@mipmap/logotransparente"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".PrincipalActivity" />
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name="br.com.hbsis.hbgameswiki.PrincipalActivity"/>
+        <activity android:name="br.com.hbsis.hbgameswiki.SplashScreenActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-               <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".cadastroJogo" />
-        <activity android:name=".RegistroActivity" />
-        <activity android:name=".SobreActivity" />
-        <activity android:name=".DetalhesJogosActivity" />
-
+        <activity android:name="br.com.hbsis.hbgameswiki.LoginActivity" />
+        <activity android:name="br.com.hbsis.hbgameswiki.MainActivity" />
+        <activity android:name="br.com.hbsis.hbgameswiki.cadastroJogo"/>
+        <activity android:name="br.com.hbsis.hbgameswiki.RegistroActivity" />
+        <activity android:name="br.com.hbsis.hbgameswiki.SobreActivity" />
+        <activity android:name="br.com.hbsis.hbgameswiki.ListaJogos" />
+        <activity android:name="br.com.hbsis.hbgameswiki.DetalhesJogosActivity" />
     </application>
 
 </manifest>
