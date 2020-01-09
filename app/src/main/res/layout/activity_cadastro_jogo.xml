@@ -48,11 +48,13 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/imgIcon" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/imgIcon"
                 android:layout_width="106dp"
                 android:layout_height="89dp"
+                android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/imgSelect"
                 app:srcCompat="@android:drawable/ic_menu_camera" />

@@ -119,7 +119,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> im
                 if (Key.isEmpty()) {
                     listaJogosFiltrados = listaJogos;
                 } else {
-                    List<Jogos> filtrados = new ArrayList<>();
+                    List<Jogos>  filtrados = new ArrayList<>();
                     for (Jogos jogos : listaJogos) {
                         if (jogos.getTitulo().toLowerCase().contains(Key.toLowerCase())) {
                             filtrados.add(jogos);

@@ -67,6 +67,7 @@ public class PrincipalActivity extends AppCompatActivity{
     Button btnMenu;
     Animation fromtop, frombottom;
     ImageView avatar;
+    ImageView jogo;
     TextView nomeUser, emailUser, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
@@ -118,8 +119,6 @@ public class PrincipalActivity extends AppCompatActivity{
                 tudo();
                 updateUI(user);
 
-
-
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the
@@ -166,6 +165,7 @@ public class PrincipalActivity extends AppCompatActivity{
 
         //ImageView
         avatar = findViewById(R.id.avatar);
+        jogo = findViewById(R.id.img_adicionar);
 
         //Animações
         fromtop = AnimationUtils.loadAnimation(this, R.anim.fromtop);
@@ -317,6 +317,14 @@ public class PrincipalActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 btnSair();
+            }
+        });
+
+
+        jogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PrincipalActivity.this, cadastroJogo.class));
             }
         });
 
