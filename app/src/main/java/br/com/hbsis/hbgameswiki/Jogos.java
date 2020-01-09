@@ -38,26 +38,26 @@ public class Jogos {
      */
 
     public Jogos(int QrCode, String titulo, String categoria, String descricao, String genero, String desenvolvedora, int img_pequena_TP, int img_grande_TP, int avaliacao, int minValor, int maxValor, int jogoFavorito, int img_pequena_1_TDJ, int img_pequena_2_TDJ, int img_pequena_3_TDJ, int img_pequena_4_TDJ, int img_pequena_5_TDJ, int img_grande_TDJ) {
-        // Tela Principal
-        QRCODE = QrCode;
-        Titulo = titulo;
-        Categoria = categoria;
-        Descricao = descricao;
-        ImagemPequenaTP = img_pequena_TP;
-        ImagemGrandeTP = img_grande_TP;
-        JogoFavorito = jogoFavorito;
-        Genero = genero;
-        Desenvolvedora = desenvolvedora;
-        Avaliacao = avaliacao;
-        MinValor = minValor;
-        MaxValor = maxValor;
+        //Tela Principal
+       QRCODE = QrCode;
+       Titulo = titulo;
+       Categoria = categoria;
+       Descricao = descricao;
+       ImagemPequenaTP = img_pequena_TP;
+       ImagemGrandeTP = img_grande_TP;
+       JogoFavorito = jogoFavorito;
+       Genero = genero;
+       Desenvolvedora = desenvolvedora;
+       Avaliacao = avaliacao;
+       MinValor = minValor;
+       MaxValor = maxValor;
         // Tela Detalhes Jogos
-        ImagemPequena1TDJ = img_pequena_1_TDJ;
-        ImagemPequena2TDJ = img_pequena_2_TDJ;
-        ImagemPequena3TDJ = img_pequena_3_TDJ;
-        ImagemPequena4TDJ = img_pequena_4_TDJ;
-        ImagemPequena5TDJ = img_pequena_5_TDJ;
-        ImagemGrandeTDJ = img_grande_TDJ;
+       ImagemPequena1TDJ = img_pequena_1_TDJ;
+       ImagemPequena2TDJ = img_pequena_2_TDJ;
+       ImagemPequena3TDJ = img_pequena_3_TDJ;
+       ImagemPequena4TDJ = img_pequena_4_TDJ;
+       ImagemPequena5TDJ = img_pequena_5_TDJ;
+       ImagemGrandeTDJ = img_grande_TDJ;
     }
 
     public int getQRCODE() {
