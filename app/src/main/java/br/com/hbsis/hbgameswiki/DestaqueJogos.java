@@ -1,7 +1,21 @@
 package br.com.hbsis.hbgameswiki;
 
+/*
+ * Classe DestaqueJogos - define o modelo do Destaque dos Jogos na PrincipalActivity
+ *
+ * Define o modelo de destaques dos jogos com parâmetros de imagem do jogo, string título e string descrição.
+ *
+ *
+ * @since 1.0.0
+ * @author Sandro Diego Adão
+ */
+
 public class DestaqueJogos {
 
+    /*
+     *
+     *
+     */
     private int imagem;
     private String titulo;
     private String descricao;
