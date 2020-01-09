@@ -1,14 +1,20 @@
 package br.com.hbsis.hbgameswiki;
 
-import android.widget.Button;
-
 public class Jogos {
 
-    private String Titulo, Categoria, Descricao, Genero, Desenvolvedora;
+    private String Titulo, Categoria, Descricao, Genero, Desenvolvedora, URL;
     private int ImagemPequenaTP, ImagemGrandeTP, JogoFavorito, Avaliacao, MinValor, MaxValor;
     private int ImagemPequena1TDJ, ImagemPequena2TDJ, ImagemPequena3TDJ, ImagemPequena4TDJ, ImagemPequena5TDJ, ImagemGrandeTDJ, QRCODE;
 
     public Jogos() {
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     /**
@@ -37,8 +43,9 @@ public class Jogos {
      * @Author Sandro Diego Adão
      */
 
-    public Jogos(int QrCode, String titulo, String categoria, String descricao, String genero, String desenvolvedora, int img_pequena_TP, int img_grande_TP, int avaliacao, int minValor, int maxValor, int jogoFavorito, int img_pequena_1_TDJ, int img_pequena_2_TDJ, int img_pequena_3_TDJ, int img_pequena_4_TDJ, int img_pequena_5_TDJ, int img_grande_TDJ) {
+    public Jogos(String url, int QrCode, String titulo, String categoria, String descricao, String genero, String desenvolvedora, int img_pequena_TP, int img_grande_TP, int avaliacao, int minValor, int maxValor, int jogoFavorito, int img_pequena_1_TDJ, int img_pequena_2_TDJ, int img_pequena_3_TDJ, int img_pequena_4_TDJ, int img_pequena_5_TDJ, int img_grande_TDJ) {
         // Tela Principal
+        URL = url;
         QRCODE = QrCode;
         Titulo = titulo;
         Categoria = categoria;

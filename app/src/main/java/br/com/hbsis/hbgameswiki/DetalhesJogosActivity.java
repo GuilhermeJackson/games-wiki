@@ -2,11 +2,16 @@ package br.com.hbsis.hbgameswiki;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 public class DetalhesJogosActivity extends AppCompatActivity {
 
@@ -24,9 +29,14 @@ public class DetalhesJogosActivity extends AppCompatActivity {
      * @Author Sandro Diego Adão
      */
 
+
+    private static final String TAG = "VideoActivity";
     private TextView tv_titulo, tv_descricao, tv_categoria, tv_min_valor, tv_max_valor;
     private ImageView img_grande, img_pequena_1, img_pequena_2, img_pequena_3, img_pequena_4, img_pequena_5, fav_icon, btn_qrCode;
-
+    private Button btnPlay;
+    YouTubePlayerView myYuTubePlayerView;
+    YouTubePlayer.OnInitializedListener mOnInitializedListener;
+    String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +56,8 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         img_pequena_5 = findViewById(R.id.img_pequena_5);
         fav_icon = findViewById(R.id.fav_icon);
         btn_qrCode = findViewById(R.id.img_qrcode);
-
+        btnPlay = findViewById(R.id.btnPlay);
+        myYuTubePlayerView = findViewById(R.id.youtubePlay);
 
         // Variáveis Chaves
         Intent intent = getIntent();
@@ -61,6 +72,8 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         int ip5 = intent.getExtras().getInt("ImagemPequena5TDJ");
         int ficon = intent.getExtras().getInt("JogoFavorito");
         int btQrCode = intent.getExtras().getInt("QRCODE");
+        int btplay = intent.getExtras().getInt("PLAY");
+        url = intent.getStringExtra("URL");
 
         // Atribuição de valores
         tv_titulo.setText(titulo);
@@ -74,9 +87,20 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         img_pequena_5.setImageResource(ip5);
         fav_icon.setImageResource(ficon);
         btn_qrCode.setImageResource(btQrCode);
+        btnPlay.setTag(url);
 
-        btn_qrCode.animate().translationY(-90).setDuration(400);
-        btn_qrCode.animate().alpha(1f).setDuration(1000);
+
+
+        btn_qrCode.animate().
+
+                translationY(-90).
+
+                setDuration(400);
+        btn_qrCode.animate().
+
+                alpha(1f).
+
+                setDuration(1000);
     }
 
     /**
@@ -88,6 +112,19 @@ public class DetalhesJogosActivity extends AppCompatActivity {
      * @Author Sandro Diego Adão
      * @void
      */
+    public void tocaVideo(View view) {
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: Initializing YouTube Player.");
+                Log.d(TAG, "onClick: Done initializing. ");
+                Intent intent = new Intent(DetalhesJogosActivity.this, VideoActivity.class);
+                intent.putExtra("video",url);
+                startActivity(intent);
+            }
+        });
+    }
+
     public void alteraImagem1(View view) {
         Intent intent = getIntent();
         img_grande = findViewById(R.id.img_grande);

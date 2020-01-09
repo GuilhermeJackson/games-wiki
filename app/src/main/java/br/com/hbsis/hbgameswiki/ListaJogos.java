@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -93,6 +94,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
                 intent.putExtra("ImagemPequena5TDJ", listaJogos.get(position).getImagemPequena5TDJ());
                 intent.putExtra("ImagemGrandeTDJ", listaJogos.get(position).getImagemGrandeTDJ());
                 intent.putExtra("QRCODE", listaJogos.get(position).getQRCODE());
+                intent.putExtra("URL", listaJogos.get(position).getURL());
 
                 // Inicia a activity
                 context.startActivity(intent);
@@ -115,12 +117,14 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
         CardView card_jogos;
         ImageView img_favorito;
         ImageView btn_qrcode;
+        Button btn_play;
 
         // Método da classe abstrata ViewHolder
         public MyViewHolder(View itemView) {
             super(itemView);
             // Atribuição
             tv_titulo = itemView.findViewById(R.id.tv_titulo);
+            btn_play = itemView.findViewById(R.id.btnPlay);
             tv_desenvolvedora = itemView.findViewById(R.id.tv_desenvolvedora);
             tv_genero = itemView.findViewById(R.id.tv_genero);
             img_pequena = itemView.findViewById(R.id.img_pequena);
@@ -129,6 +133,8 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
             img_favorito = itemView.findViewById(R.id.favorito_icon);
             card_jogos = itemView.findViewById(R.id.card_jogo);
             btn_qrcode = itemView.findViewById(R.id.img_qrcode);
+            btn_play = itemView.findViewById(R.id.btnPlay);
+
         }
     }
 }
