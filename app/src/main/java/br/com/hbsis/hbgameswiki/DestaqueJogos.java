@@ -12,10 +12,6 @@ package br.com.hbsis.hbgameswiki;
 
 public class DestaqueJogos {
 
-    /*
-     *
-     *
-     */
     private int imagem;
     private String titulo;
     private String descricao;
