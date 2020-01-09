@@ -2,13 +2,17 @@ package br.com.hbsis.hbgameswiki;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,7 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -54,26 +64,93 @@ public class PrincipalActivity extends AppCompatActivity {
     GenerosAdapter generosAdapter;
     Integer[] colors = null;
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+
     ImageView imagemIcon, img_adicionar;
 
     RecyclerView mrcv_lista_jogos;
     ListaJogos myAdapter;
+    ImageView imagemIcon;
+    EditText edt_barra_pesquisa;
 
     RelativeLayout embacar;
     LinearLayout mainmenu, maincontent;
     Button btnMenu;
     Animation fromtop, frombottom;
     ImageView avatar;
-    TextView nomeUser, email, tituloSobre, version;
+    TextView nomeUser, emailUser, tituloSobre, version;
     Button btEdit, btFavoritos, btConfig, btSobre, btSair;
     Toolbar toolbar;
 
+    /**
+     *   Variável constante para verificação do SignIn
+     */
+    static final int GOOGLE_SIGN = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
+        String usuario = preferences.getString("usuario","");
+
+        if(usuario.equals("")) {
+            SignInEmail();
+        }else{
+            tudo();
+        }
+
+    }
+
+
+    public void telaSobre(View view) {
+        Intent intent = new Intent(PrincipalActivity.this, SobreActivity.class);
+        startActivity(intent);
+    }
+
+    private void fecharMenu() {
+        mainmenu.animate().translationX(-800);
+        embacar.setX(1600);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GOOGLE_SIGN) {
+
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                tudo();
+                updateUI(user);
+
+
+
+                // ...
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+            }
+        }
+    }
+
+    /**
+     *
+     *  Método que contém toda a parte visual da activity principal
+     *
+     *
+     *
+     */
+    private void tudo(){
         setContentView(R.layout.activity_mains);
         //getSupportActionBar().hide();
+
+        // Edit Text
+        edt_barra_pesquisa = findViewById(R.id.edt_barra_pesquisa);
 
         //Button
         btEdit = findViewById(R.id.btEdit);
@@ -84,9 +161,14 @@ public class PrincipalActivity extends AppCompatActivity {
 
         //TextView
         nomeUser = findViewById(R.id.nomeUser);
-        email = findViewById(R.id.email);
+        emailUser = findViewById(R.id.email);
         tituloSobre = findViewById(R.id.tituloSobre);
         version = findViewById(R.id.version);
+
+        //SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
+        nomeUser.setText(preferences.getString("nome","User Name"));
+        emailUser.setText(preferences.getString("usuario",""));
 
         //ImageView
         avatar = findViewById(R.id.avatar);
@@ -102,7 +184,7 @@ public class PrincipalActivity extends AppCompatActivity {
         maincontent = findViewById(R.id.linearLayout22);
         mainmenu = findViewById(R.id.mainmenu);
         embacar = findViewById(R.id.embacar);
-
+      
         //Entrando na tela de cadastro
         img_adicionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +193,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 startActivityForResult(telaDeCadastro, LOGIN_REQUEST_CODE);
             }
         });
-
 
         // Cria uma ArrayList do tipo Generos
         generos = new ArrayList<>();
@@ -185,6 +266,15 @@ public class PrincipalActivity extends AppCompatActivity {
         //listaJogos.add(new Jogos("Fallout IV - Standart Edition", "Jogos", "", "• RPG", "Bethesda Game Studios", R.mipmap.fallout4_logo, R.mipmap.fallout4_logo, 2, 50, 150, R.mipmap.nao_favorito_icon_foreground, R.mipmap.fallout4_logo, R.mipmap.fallout4_1_wallpaper, R.mipmap.fallout4_2_wallpaper, R.mipmap.fallout4_3_wallpaper, R.mipmap.fallout4_4_wallpaper, R.mipmap.fallout4_logo));
         //listaJogos.add(new Game("GTA", "Jogo de matar as pessoas atropeladas e metralhadas.", generos.toString()));
 
+        listaJogos = new ArrayList<>();
+        /*
+         * new Jogos() - criar um novo card
+         * */
+        listaJogos.add(new Jogos(R.drawable.fllout_4, "Fallout IV - Standart Edition", "Jogos", "", "• RPG", "Bethesda Game Studios", R.mipmap.fallout4_logo, R.mipmap.fallout4_logo, 2, 50, 150, R.mipmap.nao_favorito_icon_foreground, R.mipmap.fallout4_logo, R.mipmap.fallout4_1_wallpaper, R.mipmap.fallout4_2_wallpaper, R.mipmap.fallout4_3_wallpaper, R.mipmap.fallout4_4_wallpaper, R.mipmap.fallout4_logo));
+        listaJogos.add(new Jogos(R.drawable.supermario, "Super Mario World", "Jogos", "", "• Plataforma  • Ação", "Nintendo Co., Ltd.", R.mipmap.supermario_logo, R.mipmap.supermario_logo, 5, 10, 20, R.mipmap.favorito_icon_foreground, R.mipmap.supermario_logo, R.mipmap.spm_1_wallpaper, R.mipmap.spm_2_wallpaper, R.mipmap.spm_3_wallpaper, R.mipmap.spm_4_wallpaper, R.mipmap.supermario_logo));
+        listaJogos.add(new Jogos(R.drawable.gta, "Grand Theft Auto V", "Jogos", "", "• Ação  • Aventura", "Rockstar North.", R.mipmap.gta5_logo, R.mipmap.gta5_logo, 5, 80, 120, R.mipmap.favorito_icon_foreground, R.mipmap.gta5_logo, R.mipmap.gta5_1_wallpaper, R.mipmap.gta5_2_wallpaper, R.mipmap.gta5_3_wallpaper, R.mipmap.gta5_4_wallpaper, R.mipmap.gta5_logo));
+        listaJogos.add(new Jogos(R.drawable.lastofus, "The last of us", "Jogos", "", "• Ação  • Aventura  • Sobrevivência", "Konami", R.mipmap.tlou_logo, R.mipmap.tlou_logo, 3, 120, 140, R.mipmap.nao_favorito_icon_foreground, R.mipmap.tlou_logo, R.mipmap.tlou_1_wallpaper, R.mipmap.tlou_2_wallpaper, R.mipmap.tlou_3_wallpaper, R.mipmap.tlou_4_wallpaper, R.mipmap.tlou_logo));
+        listaJogos.add(new Jogos(R.drawable.farcry, "Far Cry 5", "Jogos", "", "• FPS  • Ação", "Ubisoft", R.mipmap.farcry5_logo, R.mipmap.farcry5_logo, 5, 150, 300, R.mipmap.favorito_icon_foreground, R.mipmap.farcry5_logo, R.mipmap.farcry5_1_wallpaper, R.mipmap.farcry5_2_wallpaper, R.mipmap.farcry5_3_wallpaper, R.mipmap.farcry5_4_wallpaper, R.mipmap.farcry5_logo));
 
         mrcv_lista_jogos = findViewById(R.id.rcv_principal);
         myAdapter = new ListaJogos(this, listaJogos);
@@ -201,9 +291,39 @@ public class PrincipalActivity extends AppCompatActivity {
             myAdapter.notifyDataSetChanged();
         });
 
+        edt_barra_pesquisa.addTextChangedListener(new TextWatcher() {
+            final Handler handler = new Handler();
+            Runnable runnable;
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.removeCallbacks(runnable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //show some progress, because you can access UI here
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        myAdapter.getFilter().filter(edt_barra_pesquisa.getText());
+                    }
+                };
+                handler.postDelayed(runnable, 500);
+            }
+        });
+
+
         /*
          * spanCount Define a quantidade de cards que irá aparecer na horizontal
          * */
+        mrcv_lista_jogos.setLayoutManager(new GridLayoutManager(this, 1));
+        mrcv_lista_jogos.setAdapter(myAdapter);
 
         imagemIcon = findViewById(R.id.img_filtro);
         imagemIcon.setOnClickListener(new View.OnClickListener() {
@@ -214,10 +334,17 @@ public class PrincipalActivity extends AppCompatActivity {
         });
 
         //Ao clicar fora da barra ela some
-        maincontent.setOnClickListener(new View.OnClickListener() {
+        embacar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fecharMenu();
+            }
+        });
 
+        btSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnSair();
             }
         });
     }
@@ -252,32 +379,86 @@ public class PrincipalActivity extends AppCompatActivity {
         embacar.setX(0);
         embacar.bringToFront();
         mainmenu.bringToFront();
-
-        //Iniciando as animações
-
-        // de baixo
-        btEdit.startAnimation(frombottom);
-        btFavoritos.startAnimation(frombottom);
-        btConfig.startAnimation(frombottom);
-        btSobre.startAnimation(frombottom);
-        btSair.startAnimation(frombottom);
-        tituloSobre.startAnimation(frombottom);
-        version.startAnimation(frombottom);
-
-        //de cima
-        avatar.startAnimation(fromtop);
-        nomeUser.startAnimation(fromtop);
-        email.startAnimation(fromtop);
     }
 
-    public void telaSobre(View view) {
-        Intent intent = new Intent(PrincipalActivity.this, SobreActivity.class);
-        startActivity(intent);
+    /**
+     *  Método que contém o login com o email e senha via Firebase
+     *
+     *  Neste método, temos a lista dos providers para que possamos
+     *  realizar o login e/ou registro. Inicia uma activity esperando
+     *  um resultado para poder realizar a autenticação do firebase
+     *
+     * @author Matheus Geiser <matheusgeiser@gmail.com>
+     *
+     */
+    private void SignInEmail(){
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build());
+
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false)
+                        .build(),
+                GOOGLE_SIGN);
     }
+
 
     private void fecharMenu() {
         //maincontent.animate().translationX(-800);
         mainmenu.animate().translationX(-800);
         embacar.setX(1600);
+
+    /**
+     *  Método que contém a ação do botão de logout
+     *
+     *  Com o sharedPreferences é setado a key do usuario como vazia
+     *  para que na verificação do onCreate aconteça o pedido para fazer
+     *  o login, pois o usuário não está logado.
+     *
+     * @author Matheus Geiser <matheusgeiser@gmail.com>
+     *
+     */
+    private void btnSair(){
+
+        SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString("usuario","");
+        edit.apply();
+
+        fecharMenu();
+        SignInEmail();
+    }
+
+    /**
+     *
+     *  Método que salva as informações do usuário logado
+     *
+     * O parametro user contem todas as informações do usuario que
+     * foi logado. A partir disso as informações são salvas no
+     * SharedPreferences do usuario.
+     *
+     * @author Matheus Geiser <matheusgeiser@gmail.com>
+     *
+     * @param user
+     */
+    public void updateUI(FirebaseUser user) {
+        if (user != null) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+
+            SharedPreferences preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("usuario",email);
+            editor.putString("nome",name);
+            editor.apply();
+
+            //Adicionando o nome e o email à sideBar
+            nomeUser.setText(name);
+            emailUser.setText(email);
+
+        }
     }
 }
+

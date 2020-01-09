@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,12 +14,16 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
+public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> implements Filterable {
 
+    private static List<Jogos> listaJogos;
+    private static List<Jogos> listaJogosFiltrados;
     private Context context;
     private List<Game> listaGames;
+
 
     /**
      * Classe para listar novos jogos
@@ -31,6 +37,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
     public ListaJogos(Context context, List<Game> listaGames) {
         this.context = context;
         this.listaGames = listaGames;
+        this.listaJogosFiltrados = listaJogos;
     }
 
     @Override
@@ -66,6 +73,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
        //holder.img_grande.setImageResource(listaJogos.get(position).getImagemGrandeTP());
         // holder.rb_avaliacao.setRating(listaJogos.get(position).getAvaliacao());
         //holder.img_favorito.setImageResource(listaJogos.get(position).getJogoFavorito());
+
         holder.card_jogos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,8 +108,39 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return listaGames.size();
+        return listaJogosFiltrados.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String Key = charSequence.toString();
+                if (Key.isEmpty()) {
+                    listaJogosFiltrados = listaJogos;
+                } else {
+                    List<Jogos> filtrados = new ArrayList<>();
+                    for (Jogos jogos : listaJogos) {
+                        if (jogos.getTitulo().toLowerCase().contains(Key.toLowerCase())) {
+                            filtrados.add(jogos);
+                        }
+                    }
+                    listaJogosFiltrados = filtrados;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = listaJogosFiltrados;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                listaJogosFiltrados = (List<Jogos>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     // Ao extender a classe asbtrata RecyclerView.ViewHolder é nescessário implementar seu método abstrato MyViewHolder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -112,6 +151,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
         ImageView img_pequena, img_grande;
         CardView card_jogos;
         ImageView img_favorito;
+        ImageView btn_qrcode;
 
         // Método da classe abstrata ViewHolder
         public MyViewHolder(View itemView) {
@@ -125,6 +165,7 @@ public class ListaJogos extends RecyclerView.Adapter<ListaJogos.MyViewHolder> {
             rb_avaliacao = itemView.findViewById(R.id.rb_avaliacao);
             img_favorito = itemView.findViewById(R.id.favorito_icon);
             card_jogos = itemView.findViewById(R.id.card_jogo);
+            btn_qrcode = itemView.findViewById(R.id.img_qrcode);
         }
     }
 }

@@ -23,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
     Animation fromtop, frombottom;
     ImageView avatar;
     TextView nomeUser, email, tituloSobre, version;
-    Button btEdit, btFavoritos, btConfig, btSobre, btSair;
+    Button btEdit, btFavoritos, btConfig, btSobre, btSair, btnShare;
     Toolbar toolbar;
+
 
 
     @Override
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this, SobreActivity.class
         );
         startActivity(intent);
-
     }
 
 
