@@ -176,7 +176,10 @@ public class cadastroJogo extends AppCompatActivity {
         //Criando GenerosAdapter para exibir na lista de jogos da mainPrincipal
         GenerosAdapter generosAdapter = new GenerosAdapter(listarGenero(), this);
 
-        String gameTag = generos.toString();
+        String gameTag = "";
+        for(int x=0;x < generos.size();x++) {
+            gameTag += "  -" + generos.get(x).getGenero();
+        }
 
         Game game = new Game(getGameName(), getGameDesc(), gameTag);
 
