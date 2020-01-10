@@ -12,7 +12,6 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name="br.com.hbsis.hbgameswiki.PrincipalActivity"/>
         <activity android:name="br.com.hbsis.hbgameswiki.SplashScreenActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +24,7 @@
         <activity android:name="br.com.hbsis.hbgameswiki.SobreActivity" />
         <activity android:name="br.com.hbsis.hbgameswiki.ListaJogos" />
         <activity android:name="br.com.hbsis.hbgameswiki.DetalhesJogosActivity" />
-        <activity android:name="br.com.hbsis.hbgameswiki.VideoActivity" />
+        <activity android:name="br.com.hbsis.hbgameswiki.VideoActivity"/>
     </application>
 
 </manifest>
