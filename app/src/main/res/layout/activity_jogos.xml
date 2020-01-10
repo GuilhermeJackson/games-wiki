@@ -78,6 +78,7 @@
                 android:onClick="alteraImagem5"
                 tools:srcCompat="@tools:sample/avatars[0]" />
 
+
         </LinearLayout>
 
         <ImageView
@@ -105,11 +106,23 @@
                 android:layout_height="30dp"
                 app:srcCompat="@mipmap/n_heart_icon_foreground" />
 
+            <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/icons8reproduziryoutube48"
+                android:onClick="tocaVideo"
+                android:scrollHorizontally="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/compartilhar_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@mipmap/share_icon_foreground" />
+
+
 
         </LinearLayout>
 
@@ -174,5 +187,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
