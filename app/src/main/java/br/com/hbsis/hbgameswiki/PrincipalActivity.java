@@ -44,7 +44,7 @@ public class PrincipalActivity extends AppCompatActivity {
      *
      * @Author Sandro Diego Adão
      */
- 
+
     ArrayList<Game> listaJogos = new ArrayList<Game>();
     List<DestaqueJogos> destaqueJogos;
     List<Generos> generos;

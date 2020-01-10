@@ -3,6 +3,7 @@ package br.com.hbsis.hbgameswiki;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -49,6 +50,13 @@ public class Game {
         setGameName(gameName);
         setGameDescription(gameDescription);
         setGameTags(gameTags);
+    }
+
+    public Game(String gameName, String gameDescription, String gameTags, Uri uri){
+        setGameName(gameName);
+        setGameDescription(gameDescription);
+        setGameTags(gameTags);
+
     }
 
     public int getGId() {
