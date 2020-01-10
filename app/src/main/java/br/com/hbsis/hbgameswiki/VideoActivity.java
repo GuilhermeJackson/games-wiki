@@ -25,14 +25,13 @@ public class VideoActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube);
         Log.d(TAG, "onCreate: Starting ");
-        btnPlay = (Button) findViewById(R.id.btnPlay);
-        myYuTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubePlay);
+        btnPlay = findViewById(R.id.btnPlay);
+        myYuTubePlayerView = findViewById(R.id.youtubePlay);
         String url = getIntent().getStringExtra("video");
 
         mOnInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                Log.d(TAG, "onClick: Done initializing. ");
                 List<String> videoList = new ArrayList<>();
                 videoList.add(String.valueOf(btnPlay));
                 youTubePlayer.loadVideo(url);
@@ -43,7 +42,6 @@ public class VideoActivity extends YouTubeBaseActivity {
                 Log.d(TAG, "onClick: FAILED. ");
             }
         };
-
         myYuTubePlayerView.initialize(YoutubeConfig.getApiKey(),mOnInitializedListener);
     }
 }

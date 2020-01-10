@@ -101,6 +101,10 @@ public class DetalhesJogosActivity extends AppCompatActivity {
                 alpha(1f).
 
                 setDuration(1000);
+
+        btnPlay.setOnClickListener(view1 -> {
+            tocaVideo(view1);
+        });
     }
 
     /**
@@ -113,16 +117,13 @@ public class DetalhesJogosActivity extends AppCompatActivity {
      * @void
      */
     public void tocaVideo(View view) {
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: Initializing YouTube Player.");
-                Log.d(TAG, "onClick: Done initializing. ");
-                Intent intent = new Intent(DetalhesJogosActivity.this, VideoActivity.class);
-                intent.putExtra("video",url);
-                startActivity(intent);
-            }
-        });
+
+            Log.d(TAG, "onClick: Initializing YouTube Player.");
+            Log.d(TAG, "onClick: Done initializing. ");
+            Intent intent = new Intent(view.getContext(), VideoActivity.class);
+            intent.putExtra("video",url);
+            startActivity(intent);
+
     }
 
     public void alteraImagem1(View view) {
@@ -163,6 +164,10 @@ public class DetalhesJogosActivity extends AppCompatActivity {
         img_pequena_1 = findViewById(R.id.img_pequena_1);
         int ip1 = intent.getExtras().getInt("ImagemPequena5TDJ");
         img_grande.setImageResource(ip1);
+    }
+    public void alteraImagem6(View view) {
+        Intent intent = getIntent();
+        img_grande.setImageResource(R.mipmap.favorito_icon_foreground);
     }
 
 }

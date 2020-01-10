@@ -195,6 +195,7 @@ public class PrincipalActivity extends AppCompatActivity{
         generos.add(new Generos("Virtual"));
         generos.add(new Generos("Plataforma"));
         generos.add(new Generos("MMORPG"));
+        generos.add(new Generos("Erótico"));
 
         generosAdapter = new GenerosAdapter(generos, this);
         vp_generos = findViewById(R.id.vp_generos);

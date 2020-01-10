@@ -102,24 +102,24 @@
 
             <ImageView
                 android:id="@+id/fav_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:onClick="alteraImagem6"
                 app:srcCompat="@mipmap/n_heart_icon_foreground" />
 
             <Button
                 android:id="@+id/btnPlay"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@mipmap/icons8reproduziryoutube48"
-                android:onClick="tocaVideo"
                 android:scrollHorizontally="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/compartilhar_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 app:srcCompat="@mipmap/share_icon_foreground" />
 
 
