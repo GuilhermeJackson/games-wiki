@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.room.Room;
 
 import android.Manifest;
@@ -17,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -41,13 +44,20 @@ public class cadastroJogo extends AppCompatActivity {
     ImageButton imgSelect;
     ImageView imgIcon;
     AlertDialog.Builder dialog;
+    private Uri uri;
+    private String nomeImagem;
 
     CheckBox checkBoxRPG, checkBoxAcao, checkBoxAventura, checkBoxEstrategia, checkBoxHorror, checkBoxFPS, checkBoxTPS, checkBox2D, checkBox3D, checkBoxVirtual, checkBoxPlataforma, checkBoxMMORPG;
 
     List<Generos> generos;
     List<CheckBox> checkBoxes = new ArrayList<>();
-    private final int GALERIA_IMAGENS=1;
     private final int PERMISSAO_REQUEST =2;
+    private final int TIRAR_FOTO = 123123;
+    private final int REQUEST_CAMERA_PERMISSION = 2332;
+    private final int REQUEST_GALERY_PERMISSION =4444;
+    private final int GALERIA_IMAGENS = 22222;
+    private final int CAPTURAR_IMAGEM = 222;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,40 +123,31 @@ public class cadastroJogo extends AppCompatActivity {
                 //configura se fecha o dialog quando clicado no fundo (false = nao fecha)
                 dialog.setCancelable(true);
                 //confira icone do lado do titulo
-                dialog.setIcon(android.R.drawable.ic_media_ff);
+                //dialog.setIcon(android.R.drawable.ic_media_ff);
                 //botao negativo
                 dialog.setNegativeButton("Bater foto",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                                    Log.d("DEBUG","onclick antes");
-                                    ActivityCompat.requestPermissions(cadastroJogo.this, new String[]{Manifest.permission.READ_CONTACTS},
-                                            PERMISSAO_REQUEST
-                                    );
-                                    Log.d("DEBUG","onclick dps");
-                                }else{
-                                    boolean temCamera = getPackageManager()
-                                            .hasSystemFeature(PackageManager.FEATURE_CAMERA);
-                                    if (temCamera) {
-                                        //tirarFoto();
-                                    }
-                                }
-                                Toast.makeText(cadastroJogo.this, "Bateu foto", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                startActivityForResult(intent, CAPTURAR_IMAGEM);
                             }
                         });
                 dialog.setPositiveButton("Galeria",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Intent.ACTION_PICK,
-                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                 startActivityForResult(intent, 1);
+
+
                                 Toast.makeText(cadastroJogo.this, "Selecione uma imagem da sua galeria.", Toast.LENGTH_SHORT).show();
                             }
                         });
                 dialog.create();
                 dialog.show();
+                Toast.makeText(cadastroJogo.this, "Imagem selecionada.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -155,18 +156,43 @@ public class cadastroJogo extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == GALERIA_IMAGENS) {
-            Uri selectedImage = data.getData();
-            String[] filePath = { MediaStore.Images.Media.DATA };
-            Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
-            c.moveToFirst();
-            int columnIndex = c.getColumnIndex(filePath[0]);
-            String picturePath = c.getString(columnIndex);
-            c.close();
-            Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-            imgIcon.setImageBitmap(thumbnail);
+
+        if (requestCode == GALERIA_IMAGENS) {
+            if (resultCode == RESULT_OK) {
+                Uri selectedImage = data.getData();
+                String[] filePath = {MediaStore.Images.Media.DATA};
+                Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePath[0]);
+                String picturePath = c.getString(columnIndex);
+                c.close();
+                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+
+                thumbnail = rotationBitMap(thumbnail);
+                imgIcon.setImageBitmap(thumbnail);
+
+                redimencionamentoImagem(picturePath);
+            }
         }
+
+        if (requestCode == CAPTURAR_IMAGEM) {
+            if (resultCode == RESULT_OK) {
+
+                Bitmap thumbnail = (BitmapFactory.decodeFile(nomeImagem));
+                thumbnail = rotationBitMap(thumbnail);
+                imgIcon.setImageBitmap(thumbnail);
+
+                redimencionamentoImagem(nomeImagem);
+
+                Toast.makeText(cadastroJogo.this, "A imagem foi capturada.", Toast.LENGTH_SHORT).show();
+                adicionarNaGaleria();
+            } else {
+                Toast.makeText(cadastroJogo.this, "A imagem não foi capturada.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -180,12 +206,7 @@ public class cadastroJogo extends AppCompatActivity {
             return;
         }
     }
-    public static Bitmap RotateBitmap(Bitmap source, float angle)
-    {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-    }
+
 
     public boolean verificaNome(){
         boolean verificaNome = false;
@@ -315,14 +336,10 @@ public class cadastroJogo extends AppCompatActivity {
         setResult(RESULT_OK);
         finish();
     }
-/*
+
     private void tirarFoto() {
-        File diretorio = Environment
-                .getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES);
-        nomeImagem = diretorio.getPath() + "/" +
-                System.currentTimeMillis() +
-                ".jpg";
+        File diretorio = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        nomeImagem = diretorio.getPath() + "/" + System.currentTimeMillis() + ".jpg";
         //uri = Uri.fromFile(new File(nomeImagem));
         uri = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getApplicationContext().getPackageName() + ".provider", new File(nomeImagem));
 
@@ -330,5 +347,39 @@ public class cadastroJogo extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, CAPTURAR_IMAGEM);
     }
-    */
+
+    private void redimencionamentoImagem(String nomeImagem){
+
+        int targetW = imgIcon.getWidth();
+        int targetH = imgIcon.getHeight();
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+
+        BitmapFactory.decodeFile(new File(nomeImagem).getAbsolutePath(), bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+
+        Bitmap bitmap =
+                BitmapFactory.decodeFile(new File(nomeImagem).getAbsolutePath(), bmOptions);
+        bitmap = rotationBitMap(bitmap);
+        imgIcon.setImageBitmap(bitmap);
+    }
+
+    private Bitmap rotationBitMap(Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        bitmap.recycle();
+        return bmRotated;
+    }
+
+
+    private void adicionarNaGaleria() {
+        Intent intent = new Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(uri);
+        this.sendBroadcast(intent);
+    }
 }

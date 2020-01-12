@@ -52,11 +52,11 @@ public class Game {
         setGameTags(gameTags);
     }
 
-    public Game(String gameName, String gameDescription, String gameTags, Uri uri){
+    public Game(String gameName, String gameDescription, String gameTags, String image){
         setGameName(gameName);
         setGameDescription(gameDescription);
         setGameTags(gameTags);
-
+        setGameThumbnail(image);
     }
 
     public int getGId() {
